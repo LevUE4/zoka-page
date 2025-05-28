@@ -142,8 +142,13 @@
     .music-player:hover .volume-control {
       opacity: 1;
     }
+    .music-notice {
+      font-size: 0.8rem;
+      color: #666;
+      margin-top: 5px;
+      max-width: 300px;
+    }
   </style>
-  <!-- Иконки Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
@@ -166,14 +171,16 @@
       <i class="fas fa-music"></i> Фоновая музыка
     </button>
     <input type="range" class="volume-control" id="volumeControl" min="0" max="1" step="0.1" value="0.7" oninput="setVolume(this.value)">
+    <div class="music-notice">После нажатия браузер может запросить разрешение на звук</div>
   </div>
 
   <div class="footer">made with care — 2025</div>
 
-  <!-- Аудио с вашим треком -->
-  <audio id="bgMusic" loop>
-    <source src="https://drive.google.com/uc?export=download&id=1rEOnkF6kOt4tpSutrpbqR2k4D5Akdz8D" type="audio/mpeg">
-    Ваш браузер не поддерживает аудио элемент.
+  <!-- Аудио с локальным треком -->
+  <audio id="bgMusic" loop preload="auto">
+    <source src="music/love_song.ogg" type="audio/ogg">
+    <source src="music/love_song.mp3" type="audio/mpeg">
+    Ваш браузер не поддерживает аудио.
   </audio>
 
   <script>
@@ -213,27 +220,22 @@
     const musicBtn = document.getElementById('musicBtn');
     let isPlaying = false;
     
-    function toggleMusic() {
-  if (isPlaying) {
-    music.pause();
-    musicBtn.innerHTML = '<i class="fas fa-music"></i> Фоновая музыка';
-    isPlaying = false;
-  } else {
-    // Показываем промпт перед воспроизведением
-    const userResponse = confirm("Включить фоновую музыку? Нажмите OK для подтверждения.");
-    if (userResponse) {
-      music.play()
-        .then(() => {
+    async function toggleMusic() {
+      try {
+        if (music.paused) {
+          await music.play();
           musicBtn.innerHTML = '<i class="fas fa-pause"></i> Пауза';
           isPlaying = true;
-        })
-        .catch(e => {
-          alert('Для воспроизведения музыки обновите страницу и нажмите "Разрешить" в запросе браузера');
-          musicBtn.innerHTML = '<i class="fas fa-music"></i> Ошибка. Попробуйте снова';
-        });
+        } else {
+          music.pause();
+          musicBtn.innerHTML = '<i class="fas fa-music"></i> Фоновая музыка';
+          isPlaying = false;
+        }
+      } catch (e) {
+        musicBtn.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Ошибка';
+        alert('Разрешите воспроизведение звука в браузере. Ищите иконку 🔇 в адресной строке.');
+      }
     }
-  }
-}
     
     function setVolume(volume) {
       music.volume = volume;
@@ -244,6 +246,15 @@
       const heart = document.querySelector('.heart');
       heart.style.opacity = 0.7 + Math.random() * 0.3;
     }, 1000);
+
+    // Предзагрузка музыки при загрузке страницы
+    window.addEventListener('load', () => {
+      music.volume = 0.7;
+      // Пытаемся предзагрузить, но не воспроизводим
+      music.play().then(() => {
+        music.pause();
+      }).catch(() => {});
+    });
   </script>
 </body>
 </html>
