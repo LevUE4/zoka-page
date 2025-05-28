@@ -214,15 +214,26 @@
     let isPlaying = false;
     
     function toggleMusic() {
-      if (isPlaying) {
-        music.pause();
-        musicBtn.innerHTML = '<i class="fas fa-music"></i> Фоновая музыка';
-      } else {
-        music.play().catch(e => alert('Браузер запретил воспроизведение. Нажмите "Разрешить" или обновите страницу.'));
-        musicBtn.innerHTML = '<i class="fas fa-pause"></i> Пауза';
-      }
-      isPlaying = !isPlaying;
+  if (isPlaying) {
+    music.pause();
+    musicBtn.innerHTML = '<i class="fas fa-music"></i> Фоновая музыка';
+    isPlaying = false;
+  } else {
+    // Показываем промпт перед воспроизведением
+    const userResponse = confirm("Включить фоновую музыку? Нажмите OK для подтверждения.");
+    if (userResponse) {
+      music.play()
+        .then(() => {
+          musicBtn.innerHTML = '<i class="fas fa-pause"></i> Пауза';
+          isPlaying = true;
+        })
+        .catch(e => {
+          alert('Для воспроизведения музыки обновите страницу и нажмите "Разрешить" в запросе браузера');
+          musicBtn.innerHTML = '<i class="fas fa-music"></i> Ошибка. Попробуйте снова';
+        });
     }
+  }
+}
     
     function setVolume(volume) {
       music.volume = volume;
