@@ -210,7 +210,6 @@
   </style>
 </head>
 <body>
-
   <img src="LOGO_ZOKA.png" alt="ZOKA" class="logo">
   
   <h1>Твой уникальный путь</h1>
@@ -276,11 +275,11 @@
   </div>
   
   <footer>
-    Создано с ❤️ — 2024
+    Создано с ❤️ — 2025
   </footer>
   
   <audio id="bgMusic" loop>
-    <source src="love_song.ogg" type="audio/mpeg">
+    <source src="music/love_song.ogg" type="audio/mpeg">
     Ваш браузер не поддерживает аудио.
   </audio>
   
@@ -306,26 +305,35 @@
     const volumeControl = document.getElementById('volumeControl');
     let isPlaying = false;
     
+    // Установка громкости
     music.volume = volumeControl.value;
     
-    musicBtn.addEventListener('click', () => {
-      if (isPlaying) {
-        music.pause();
-        musicBtn.innerHTML = '<i class="fas fa-music"></i> Включить музыку';
-      } else {
-        music.play()
-          .then(() => {
-            musicBtn.innerHTML = '<i class="fas fa-pause"></i> Пауза';
-          })
-          .catch(e => {
-            alert('Разрешите воспроизведение звука в браузере');
-          });
+    // Обработчик кнопки
+    musicBtn.addEventListener('click', async () => {
+      try {
+        if (isPlaying) {
+          await music.pause();
+          musicBtn.innerHTML = '<i class="fas fa-music"></i> Включить музыку';
+        } else {
+          await music.play();
+          musicBtn.innerHTML = '<i class="fas fa-pause"></i> Пауза';
+        }
+        isPlaying = !isPlaying;
+      } catch (e) {
+        alert('Браузер запретил воспроизведение. Обновите страницу и нажмите "Разрешить"');
+        musicBtn.innerHTML = '<i class="fas fa-exclamation-circle"></i> Ошибка';
       }
-      isPlaying = !isPlaying;
     });
     
+    // Регулятор громкости
     volumeControl.addEventListener('input', (e) => {
       music.volume = e.target.value;
+    });
+    
+    // Проверка загрузки музыки
+    music.addEventListener('error', () => {
+      alert('Ошибка загрузки музыки. Проверьте файл music.mp3');
+      musicBtn.disabled = true;
     });
   </script>
 </body>
