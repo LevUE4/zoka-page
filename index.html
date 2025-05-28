@@ -107,7 +107,44 @@
       background: #d23669;
       color: white;
     }
+    .music-player {
+      margin-top: 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .music-btn {
+      background-color: #ff6b81;
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 30px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .music-btn:hover {
+      background-color: #d23669;
+      transform: scale(1.05);
+    }
+    .music-btn i {
+      font-size: 1.2rem;
+    }
+    .volume-control {
+      margin-top: 10px;
+      width: 150px;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .music-player:hover .volume-control {
+      opacity: 1;
+    }
   </style>
+  <!-- Иконки Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
   <div class="petals" id="petals"></div>
@@ -122,16 +159,32 @@
   </div>
   
   <button onclick="showMessage()">Нажми, если хочешь</button>
-  
+
+  <!-- Музыкальный плеер -->
+  <div class="music-player">
+    <button class="music-btn" id="musicBtn" onclick="toggleMusic()">
+      <i class="fas fa-music"></i> Фоновая музыка
+    </button>
+    <input type="range" class="volume-control" id="volumeControl" min="0" max="1" step="0.1" value="0.7" oninput="setVolume(this.value)">
+  </div>
+
   <div class="footer">made with care — 2025</div>
 
+  <!-- Аудио с вашим треком -->
+  <audio id="bgMusic" loop>
+    <source src="https://drive.google.com/uc?export=download&id=1rEOnkF6kOt4tpSutrpbqR2k4D5Akdz8D" type="audio/mpeg">
+    Ваш браузер не поддерживает аудио элемент.
+  </audio>
+
   <script>
+    // Показать скрытое сообщение
     function showMessage() {
       document.getElementById('hiddenMessage').classList.add('show');
       document.body.style.backgroundColor = '#fff0f0';
       createPetals();
     }
     
+    // Создать падающие лепестки
     function createPetals() {
       const petalsContainer = document.getElementById('petals');
       const petalCount = 15;
@@ -140,8 +193,6 @@
         setTimeout(() => {
           const petal = document.createElement('div');
           petal.classList.add('petal');
-          
-          // Используем символ сердца или цветка вместо изображения
           petal.innerHTML = '❀';
           petal.style.left = Math.random() * 100 + 'vw';
           petal.style.fontSize = (Math.random() * 20 + 10) + 'px';
@@ -150,12 +201,31 @@
           
           petalsContainer.appendChild(petal);
           
-          // Удаляем лепестки после анимации, чтобы не накапливались
           setTimeout(() => {
             petal.remove();
           }, 10000);
         }, i * 300);
       }
+    }
+    
+    // Управление музыкой
+    const music = document.getElementById('bgMusic');
+    const musicBtn = document.getElementById('musicBtn');
+    let isPlaying = false;
+    
+    function toggleMusic() {
+      if (isPlaying) {
+        music.pause();
+        musicBtn.innerHTML = '<i class="fas fa-music"></i> Фоновая музыка';
+      } else {
+        music.play().catch(e => alert('Браузер запретил воспроизведение. Нажмите "Разрешить" или обновите страницу.'));
+        musicBtn.innerHTML = '<i class="fas fa-pause"></i> Пауза';
+      }
+      isPlaying = !isPlaying;
+    }
+    
+    function setVolume(volume) {
+      music.volume = volume;
     }
     
     // Мягкое мерцание сердца
