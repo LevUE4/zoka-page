@@ -3,118 +3,149 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Для ZOKA</title>
+  <title>ZOKA — Твой путь</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
-    body {
+    :root {
+      --accent: #ff6b81;
+      --text-light: rgba(255, 255, 255, 0.9);
+      --text-muted: rgba(255, 255, 255, 0.6);
+    }
+    
+    * {
       margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
       font-family: 'Georgia', serif;
-      background-color: #fff9f9;
-      color: #333;
+      background-color: #121212;
+      color: var(--text-light);
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      height: 100vh;
       text-align: center;
-      transition: background-color 1s ease;
-      overflow: hidden;
+      padding: 20px;
+      background-image: 
+        radial-gradient(circle at 25% 25%, rgba(255, 107, 129, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 75% 75%, rgba(255, 107, 129, 0.1) 0%, transparent 50%);
     }
-    h1 {
-      font-size: 3rem;
-      margin: 0;
-      letter-spacing: 1px;
-      font-weight: normal;
-    }
-    p {
-      font-size: 1.2rem;
-      margin-top: 1rem;
-      max-width: 600px;
-      line-height: 1.6;
-    }
+    
+    /* Логотип */
     .logo {
-      font-size: 4rem;
-      font-weight: bold;
-      letter-spacing: 0.3rem;
-      color: #d23669;
-      margin-bottom: 1rem;
-      transition: transform 0.5s ease;
+      width: 180px;
+      margin: 30px 0;
+      filter: drop-shadow(0 0 15px rgba(255, 107, 129, 0.7));
+      transition: transform 0.5s;
     }
+    
     .logo:hover {
       transform: scale(1.05);
     }
-    .footer {
-      position: absolute;
-      bottom: 20px;
-      font-size: 0.9rem;
-      color: #aaa;
+    
+    /* Заголовки */
+    h1 {
+      font-size: 2.2rem;
+      font-weight: normal;
+      margin-bottom: 15px;
+      letter-spacing: 1px;
     }
-    .heart {
-      color: #ff4757;
-      font-size: 1.5rem;
-      display: inline-block;
-      animation: pulse 1.5s infinite;
+    
+    .subtitle {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      max-width: 600px;
+      line-height: 1.6;
+      margin-bottom: 40px;
     }
-    .hidden-message {
-      opacity: 0;
-      max-height: 0;
-      overflow: hidden;
-      transition: all 1s ease;
-      font-style: italic;
-      color: #d23669;
+    
+    /* Линия пути */
+    .journey {
+      width: 100%;
+      max-width: 800px;
+      position: relative;
+      margin: 50px 0;
     }
-    .show {
-      opacity: 1;
-      max-height: 100px;
-      margin-top: 1rem;
-    }
-    .petals {
+    
+    .journey-line {
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      width: 100%;
       position: absolute;
       top: 0;
       left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: -1;
+      z-index: 1;
     }
-    .petal {
+    
+    /* Вехи */
+    .milestone {
+      position: relative;
+      padding: 25px;
+      margin: 60px 0;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.6s ease;
+      z-index: 2;
+    }
+    
+    .milestone.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .milestone::before {
+      content: '';
       position: absolute;
-      background-size: contain;
-      opacity: 0.7;
-      animation: falling linear infinite;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--accent);
+      top: 50%;
+      transform: translateY(-50%);
+      box-shadow: 0 0 0 4px rgba(255, 107, 129, 0.3);
     }
-    @keyframes falling {
-      to {
-        transform: translateY(100vh) rotate(360deg);
-      }
+    
+    .milestone:nth-child(odd) {
+      text-align: right;
+      padding-right: 100px;
     }
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.3); }
-      100% { transform: scale(1); }
+    
+    .milestone:nth-child(even) {
+      text-align: left;
+      padding-left: 100px;
     }
-    button {
-      background: none;
-      border: 1px solid #d23669;
-      color: #d23669;
-      padding: 10px 20px;
-      margin-top: 20px;
-      border-radius: 20px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      font-family: 'Georgia', serif;
+    
+    .milestone:nth-child(odd)::before {
+      right: 30px;
     }
-    button:hover {
-      background: #d23669;
-      color: white;
+    
+    .milestone:nth-child(even)::before {
+      left: 30px;
     }
+    
+    .milestone-date {
+      color: var(--accent);
+      font-size: 0.9rem;
+      margin-bottom: 8px;
+    }
+    
+    .milestone-text {
+      font-size: 1.1rem;
+      line-height: 1.5;
+    }
+    
+    /* Музыкальный плеер */
     .music-player {
-      margin-top: 30px;
+      margin: 40px 0;
       display: flex;
       flex-direction: column;
       align-items: center;
     }
+    
     .music-btn {
-      background-color: #ff6b81;
+      background-color: var(--accent);
       color: white;
       border: none;
       padding: 12px 25px;
@@ -125,135 +156,176 @@
       display: flex;
       align-items: center;
       gap: 8px;
-    }
-    .music-btn:hover {
-      background-color: #d23669;
-      transform: scale(1.05);
-    }
-    .music-btn i {
-      font-size: 1.2rem;
-    }
-    .volume-control {
-      margin-top: 10px;
-      width: 150px;
-      opacity: 0;
-      transition: opacity 0.3s;
-    }
-    .music-player:hover .volume-control {
-      opacity: 1;
-    }
-    .music-notice {
-      font-size: 0.8rem;
-      color: #666;
-      margin-top: 5px;
-      max-width: 300px;
-    }
-  </style>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-</head>
-<body>
-  <div class="petals" id="petals"></div>
-  
-  <div class="logo">ZOKA</div>
-  <h1>Ты нашла это место <span class="heart">♥</span></h1>
-  <p>И, если честно, неважно, зачем — пусть просто напомнит, что о тебе думают тепло. Без условий, без повесток. Просто.</p>
-  <p>Иногда одного такого сигнала достаточно, чтобы чуть улыбнуться.</p>
-  
-  <div class="hidden-message" id="hiddenMessage">
-    Потому что ты — это тот редкий свет, который делает обычные дни особенными...
-  </div>
-  
-  <button onclick="showMessage()">Нажми, если хочешь</button>
-
-  <!-- Музыкальный плеер -->
-  <div class="music-player">
-    <button class="music-btn" id="musicBtn" onclick="toggleMusic()">
-      <i class="fas fa-music"></i> Фоновая музыка
-    </button>
-    <input type="range" class="volume-control" id="volumeControl" min="0" max="1" step="0.1" value="0.7" oninput="setVolume(this.value)">
-    <div class="music-notice">После нажатия браузер может запросить разрешение на звук</div>
-  </div>
-
-  <div class="footer">made with care — 2025</div>
-
-  <!-- Аудио с локальным треком -->
-  <audio id="bgMusic" loop preload="auto">
-    <source src="music/love_song.ogg" type="audio/ogg">
-    <source src="music/love_song.mp3" type="audio/mpeg">
-    Ваш браузер не поддерживает аудио.
-  </audio>
-
-  <script>
-    // Показать скрытое сообщение
-    function showMessage() {
-      document.getElementById('hiddenMessage').classList.add('show');
-      document.body.style.backgroundColor = '#fff0f0';
-      createPetals();
+      font-family: 'Georgia', serif;
     }
     
-    // Создать падающие лепестки
-    function createPetals() {
-      const petalsContainer = document.getElementById('petals');
-      const petalCount = 15;
+    .music-btn:hover {
+      background-color: #e0556e;
+      transform: scale(1.05);
+    }
+    
+    .volume-control {
+      margin-top: 15px;
+      width: 150px;
+      opacity: 0.7;
+      transition: opacity 0.3s;
+    }
+    
+    .music-notice {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 10px;
+      max-width: 300px;
+    }
+    
+    /* Футер */
+    footer {
+      margin-top: auto;
+      padding: 20px;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+    
+    /* Адаптивность */
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 1.8rem;
+      }
       
-      for (let i = 0; i < petalCount; i++) {
-        setTimeout(() => {
-          const petal = document.createElement('div');
-          petal.classList.add('petal');
-          petal.innerHTML = '❀';
-          petal.style.left = Math.random() * 100 + 'vw';
-          petal.style.fontSize = (Math.random() * 20 + 10) + 'px';
-          petal.style.animationDuration = (Math.random() * 5 + 5) + 's';
-          petal.style.animationDelay = Math.random() * 5 + 's';
-          
-          petalsContainer.appendChild(petal);
-          
-          setTimeout(() => {
-            petal.remove();
-          }, 10000);
-        }, i * 300);
+      .milestone {
+        padding: 20px 10px;
+        margin: 40px 0;
+      }
+      
+      .milestone:nth-child(odd),
+      .milestone:nth-child(even) {
+        text-align: center;
+        padding: 20px 30px !important;
+      }
+      
+      .milestone::before {
+        display: none;
       }
     }
+  </style>
+</head>
+<body>
+
+  <img src="LOGO_ZOKA.png" alt="ZOKA" class="logo">
+  
+  <h1>Твой уникальный путь</h1>
+  <p class="subtitle">Каждый шаг — это история, достойная восхищения</p>
+  
+  <!-- Линия жизни -->
+  <div class="journey">
+    <div class="journey-line"></div>
+    
+    <!-- Веха 1 -->
+    <div class="milestone">
+      <div class="milestone-date">Начало</div>
+      <div class="milestone-text">
+        <i class="fas fa-seedling" style="color: var(--accent); margin-right: 8px;"></i>
+        Там, где другие видели границы, ты увидела возможности
+      </div>
+    </div>
+    
+    <!-- Веха 2 -->
+    <div class="milestone">
+      <div class="milestone-date">2018</div>
+      <div class="milestone-text">
+        <i class="fas fa-mountain" style="color: var(--accent); margin-right: 8px;"></i>
+        Первые вершины, которые казались недостижимыми
+      </div>
+    </div>
+    
+    <!-- Веха 3 -->
+    <div class="milestone">
+      <div class="milestone-date">2020</div>
+      <div class="milestone-text">
+        <i class="fas fa-trophy" style="color: var(--accent); margin-right: 8px;"></i>
+        Преодоление трудностей, которые сделали тебя сильнее
+      </div>
+    </div>
+    
+    <!-- Веха 4 -->
+    <div class="milestone">
+      <div class="milestone-date">Сейчас</div>
+      <div class="milestone-text">
+        <i class="fas fa-star" style="color: var(--accent); margin-right: 8px;"></i>
+        Ты там, куда многие только мечтают попасть
+      </div>
+    </div>
+    
+    <!-- Веха 5 -->
+    <div class="milestone">
+      <div class="milestone-date">Будущее</div>
+      <div class="milestone-text">
+        <i class="fas fa-rocket" style="color: var(--accent); margin-right: 8px;"></i>
+        Самые яркие моменты ещё впереди
+      </div>
+    </div>
+  </div>
+  
+  <!-- Музыкальный плеер -->
+  <div class="music-player">
+    <button class="music-btn" id="musicBtn">
+      <i class="fas fa-music"></i> Включить музыку
+    </button>
+    <input type="range" class="volume-control" id="volumeControl" min="0" max="1" step="0.1" value="0.7">
+    <p class="music-notice">Нажмите кнопку, чтобы включить фоновую музыку</p>
+  </div>
+  
+  <footer>
+    Создано с ❤️ — 2024
+  </footer>
+  
+  <audio id="bgMusic" loop>
+    <source src="love_song.ogg" type="audio/mpeg">
+    Ваш браузер не поддерживает аудио.
+  </audio>
+  
+  <script>
+    // Анимация вех при прокрутке
+    const milestones = document.querySelectorAll('.milestone');
+    
+    function checkMilestones() {
+      milestones.forEach(milestone => {
+        const rect = milestone.getBoundingClientRect();
+        if (rect.top < window.innerHeight * 0.75) {
+          milestone.classList.add('visible');
+        }
+      });
+    }
+    
+    window.addEventListener('scroll', checkMilestones);
+    window.addEventListener('load', checkMilestones);
     
     // Управление музыкой
     const music = document.getElementById('bgMusic');
     const musicBtn = document.getElementById('musicBtn');
+    const volumeControl = document.getElementById('volumeControl');
     let isPlaying = false;
     
-    async function toggleMusic() {
-      try {
-        if (music.paused) {
-          await music.play();
-          musicBtn.innerHTML = '<i class="fas fa-pause"></i> Пауза';
-          isPlaying = true;
-        } else {
-          music.pause();
-          musicBtn.innerHTML = '<i class="fas fa-music"></i> Фоновая музыка';
-          isPlaying = false;
-        }
-      } catch (e) {
-        musicBtn.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Ошибка';
-        alert('Разрешите воспроизведение звука в браузере. Ищите иконку 🔇 в адресной строке.');
-      }
-    }
+    music.volume = volumeControl.value;
     
-    function setVolume(volume) {
-      music.volume = volume;
-    }
-    
-    // Мягкое мерцание сердца
-    setInterval(() => {
-      const heart = document.querySelector('.heart');
-      heart.style.opacity = 0.7 + Math.random() * 0.3;
-    }, 1000);
-
-    // Предзагрузка музыки при загрузке страницы
-    window.addEventListener('load', () => {
-      music.volume = 0.7;
-      // Пытаемся предзагрузить, но не воспроизводим
-      music.play().then(() => {
+    musicBtn.addEventListener('click', () => {
+      if (isPlaying) {
         music.pause();
-      }).catch(() => {});
+        musicBtn.innerHTML = '<i class="fas fa-music"></i> Включить музыку';
+      } else {
+        music.play()
+          .then(() => {
+            musicBtn.innerHTML = '<i class="fas fa-pause"></i> Пауза';
+          })
+          .catch(e => {
+            alert('Разрешите воспроизведение звука в браузере');
+          });
+      }
+      isPlaying = !isPlaying;
+    });
+    
+    volumeControl.addEventListener('input', (e) => {
+      music.volume = e.target.value;
     });
   </script>
 </body>
