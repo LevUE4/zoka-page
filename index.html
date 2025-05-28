@@ -1,38 +1,46 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ZOKA</title>
+  <title>Для ZOKA</title>
   <style>
     body {
       margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-      background-color: #ffffff;
-      color: #111;
+      font-family: 'Georgia', serif;
+      background-color: #fff9f9;
+      color: #333;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       height: 100vh;
       text-align: center;
+      transition: background-color 1s ease;
+      overflow: hidden;
     }
     h1 {
       font-size: 3rem;
       margin: 0;
       letter-spacing: 1px;
+      font-weight: normal;
     }
     p {
       font-size: 1.2rem;
       margin-top: 1rem;
       max-width: 600px;
+      line-height: 1.6;
     }
     .logo {
       font-size: 4rem;
       font-weight: bold;
       letter-spacing: 0.3rem;
-      color: #000;
+      color: #d23669;
       margin-bottom: 1rem;
+      transition: transform 0.5s ease;
+    }
+    .logo:hover {
+      transform: scale(1.05);
     }
     .footer {
       position: absolute;
@@ -40,13 +48,121 @@
       font-size: 0.9rem;
       color: #aaa;
     }
+    .heart {
+      color: #ff4757;
+      font-size: 1.5rem;
+      display: inline-block;
+      animation: pulse 1.5s infinite;
+    }
+    .hidden-message {
+      opacity: 0;
+      max-height: 0;
+      overflow: hidden;
+      transition: all 1s ease;
+      font-style: italic;
+      color: #d23669;
+    }
+    .show {
+      opacity: 1;
+      max-height: 100px;
+      margin-top: 1rem;
+    }
+    .petals {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+    }
+    .petal {
+      position: absolute;
+      background-size: contain;
+      opacity: 0.7;
+      animation: falling linear infinite;
+    }
+    @keyframes falling {
+      to {
+        transform: translateY(100vh) rotate(360deg);
+      }
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.3); }
+      100% { transform: scale(1); }
+    }
+    button {
+      background: none;
+      border: 1px solid #d23669;
+      color: #d23669;
+      padding: 10px 20px;
+      margin-top: 20px;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: 'Georgia', serif;
+    }
+    button:hover {
+      background: #d23669;
+      color: white;
+    }
   </style>
 </head>
 <body>
+  <div class="petals" id="petals"></div>
+  
   <div class="logo">ZOKA</div>
-  <h1>�� ����� ��� �����</h1>
-  <p>�, ���� ������, �������, ����� � ����� ������ ��������, ��� � ���� ������ �����. ��� �������, ��� ��������. ������.</p>
-  <p>������ ������ ������ ������� ����������, ����� ���� ����������.</p>
-  <div class="footer">made with care � 2025</div>
+  <h1>Ты нашла это место <span class="heart">♥</span></h1>
+  <p>И, если честно, неважно, зачем — пусть просто напомнит, что о тебе думают тепло. Без условий, без повесток. Просто.</p>
+  <p>Иногда одного такого сигнала достаточно, чтобы чуть улыбнуться.</p>
+  
+  <div class="hidden-message" id="hiddenMessage">
+    Потому что ты — это тот редкий свет, который делает обычные дни особенными...
+  </div>
+  
+  <button onclick="showMessage()">Нажми, если хочешь</button>
+  
+  <div class="footer">made with care — 2025</div>
+
+  <script>
+    function showMessage() {
+      document.getElementById('hiddenMessage').classList.add('show');
+      document.body.style.backgroundColor = '#fff0f0';
+      createPetals();
+    }
+    
+    function createPetals() {
+      const petalsContainer = document.getElementById('petals');
+      const petalCount = 15;
+      
+      for (let i = 0; i < petalCount; i++) {
+        setTimeout(() => {
+          const petal = document.createElement('div');
+          petal.classList.add('petal');
+          
+          // Используем символ сердца или цветка вместо изображения
+          petal.innerHTML = '❀';
+          petal.style.left = Math.random() * 100 + 'vw';
+          petal.style.fontSize = (Math.random() * 20 + 10) + 'px';
+          petal.style.animationDuration = (Math.random() * 5 + 5) + 's';
+          petal.style.animationDelay = Math.random() * 5 + 's';
+          
+          petalsContainer.appendChild(petal);
+          
+          // Удаляем лепестки после анимации, чтобы не накапливались
+          setTimeout(() => {
+            petal.remove();
+          }, 10000);
+        }, i * 300);
+      }
+    }
+    
+    // Мягкое мерцание сердца
+    setInterval(() => {
+      const heart = document.querySelector('.heart');
+      heart.style.opacity = 0.7 + Math.random() * 0.3;
+    }, 1000);
+  </script>
 </body>
 </html>
