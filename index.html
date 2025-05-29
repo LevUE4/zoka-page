@@ -354,6 +354,70 @@
         padding: 10px 25px;
       }
     }
+     .milestone img {
+        max-width: 100%;
+        margin-top: 20px;
+        border-radius: 12px;
+        box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+        transition: transform 0.3s ease;
+        }
+
+.milestone img:hover {
+  transform: scale(1.02);
+}
+
+.milestone .flip-container {
+  perspective: 1000px;
+  margin-top: 20px;
+  display: inline-block;
+  max-width: 100%;
+}
+
+.flip-inner {
+  position: relative;
+  width: 100%;
+  max-width: 500px;
+  transform-style: preserve-3d;
+  transition: transform 0.8s;
+}
+
+.flip-container.flipped .flip-inner {
+  transform: rotateY(180deg);
+}
+
+.flip-front, .flip-back {
+  backface-visibility: hidden;
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+}
+
+.flip-front img {
+  width: 100%;
+  display: block;
+  border-radius: 12px;
+}
+
+.flip-back {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--accent);
+  transform: rotateY(180deg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  text-align: center;
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
+.flip-container:hover {
+  cursor: pointer;
+}
+
   </style>
 </head>
 <body>
@@ -365,18 +429,30 @@
     <div class="journey-line"></div>
     
     <div class="milestone">
-      <div class="milestone-date">НАЧАЛО</div>
-      <div class="milestone-text">Там, где другие видели границы, ты увидела возможности</div>
+  <div class="milestone-date">НАЧАЛО</div>
+  <div class="milestone-text">Там, где другие видели границы, ты увидела возможности</div>
+  <div class="flip-container" onclick="this.classList.toggle('flipped')">
+    <div class="flip-inner">
+      <div class="flip-front">
+        <img src="images/memor1.jpg" alt="НАЧАЛО">
+      </div>
+      <div class="flip-back">
+        Здесь началась твоя история — момент, когда ты решилась.
+      </div>
     </div>
+  </div>
+</div>
     
     <div class="milestone">
       <div class="milestone-date">2018</div>
       <div class="milestone-text">Первые вершины, которые казались недостижимыми</div>
+      <img src="images/memor2.jpg" alt="2018">
     </div>
     
     <div class="milestone">
       <div class="milestone-date">2020</div>
       <div class="milestone-text">Преодоление трудностей, которые сделали тебя сильнее</div>
+      <img src="images/memor3.jpg" alt="2020">
     </div>
     
     <div class="milestone">
@@ -417,6 +493,8 @@
         if (rect.top < window.innerHeight * 0.75) {
           setTimeout(() => {
             milestone.classList.add('visible');
+            const flip = milestone.querySelector('.flip-container');
+            if (flip) flip.classList.add('animated');
           }, index * 150);
         }
       });
