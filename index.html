@@ -172,35 +172,48 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 10px;
+      padding: 15px;
       background: rgba(212, 175, 55, 0.05);
       border-radius: 8px;
       border-left: 3px solid var(--accent);
+      transition: all 0.3s ease;
+    }
+
+    .fact-actions {
+      display: flex;
+      justify-content: center;
+      margin-top: 15px;
     }
     
     .new-fact-btn {
-      background: transparent;
-      border: 1px solid var(--accent);
+      background: rgba(212, 175, 55, 0.15);
+      border: none;
       color: var(--accent);
-      padding: 8px 20px;
-      border-radius: 20px;
+      padding: 10px 25px;
+      border-radius: 30px;
       cursor: pointer;
       font-family: 'Georgia', serif;
-      font-size: 0.9rem;
+      font-size: 0.95rem;
       transition: all 0.3s ease;
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      margin-top: 10px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     }
 
     .new-fact-btn:hover {
-      background: rgba(212, 175, 55, 0.1);
+      background: rgba(212, 175, 55, 0.25);
       transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     }
 
     .new-fact-btn i {
       font-size: 0.9rem;
+      transition: transform 0.3s ease;
+    }
+
+    .new-fact-btn:hover i {
+      transform: rotate(45deg);
     }
 
     .letter-block {
@@ -336,6 +349,16 @@
         width: 100%;
       }
     }
+
+    /* Анимация для фактов */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .fade-in {
+      animation: fadeIn 0.5s ease forwards;
+    }
   </style>
 </head>
 <body>
@@ -345,10 +368,12 @@
 
   <div class="fact-block">
     <h2><i class="fas fa-lightbulb"></i> Факт о тебе</h2>
-    <div id="fact-text">Ты умеешь восхищать — просто своим присутствием.</div>
-    <button class="new-fact-btn" onclick="getRandomFact()">
-      <i class="fas fa-redo-alt"></i> Новый факт
-    </button>
+    <div id="fact-text" class="fade-in">Ты умеешь восхищать — просто своим присутствием.</div>
+    <div class="fact-actions">
+      <button class="new-fact-btn" onclick="getRandomFact()">
+        <i class="fas fa-redo-alt"></i> Новый факт
+      </button>
+    </div>
   </div>
 
   <div class="journey">
@@ -454,13 +479,12 @@
       do {
         newFact = facts[Math.floor(Math.random() * facts.length)];
       } while (newFact === text.innerText && facts.length > 1);
-      text.innerText = newFact;
       
-      // Анимация
-      text.style.animation = 'none';
+      text.classList.remove('fade-in');
       setTimeout(() => {
-        text.style.animation = 'fadeIn 0.5s ease';
-      }, 10);
+        text.innerText = newFact;
+        text.classList.add('fade-in');
+      }, 200);
     }
 
     // Управление музыкой
