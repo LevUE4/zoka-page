@@ -11,16 +11,14 @@
       --text-light: rgba(255, 255, 255, 0.9);
       --text-muted: rgba(255, 255, 255, 0.6);
     }
-    
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
-    
     body {
       font-family: 'Georgia', serif;
-      background-color: #1a1a1a;
+      background-color: #121212;
       color: var(--text-light);
       min-height: 100vh;
       display: flex;
@@ -28,45 +26,25 @@
       align-items: center;
       text-align: center;
       padding: 20px;
-      opacity: 0;
-      animation: fadeIn 1.2s ease forwards;
       background-image:
-        radial-gradient(circle at 25% 25%, rgba(212, 175, 55, 0.08) 0%, transparent 50%),
-        radial-gradient(circle at 75% 75%, rgba(212, 175, 55, 0.08) 0%, transparent 50%),
-        repeating-linear-gradient(45deg, rgba(255,255,255,0.015) 0, rgba(255,255,255,0.015) 1px, transparent 1px, transparent 20px);
+        radial-gradient(circle at 25% 25%, rgba(255, 107, 129, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 75% 75%, rgba(255, 107, 129, 0.1) 0%, transparent 50%);
     }
-    
-    @keyframes fadeIn {
-      to { opacity: 1; }
-    }
-    
-    /* Стили для логотипа */
-    .logo-container {
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      margin: 20px 0 10px;
-    }
-    
     .logo {
-      height: 120px;
-      width: auto;
-      filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.6));
+      width: 180px;
+      margin: 30px 0;
+      filter: drop-shadow(0 0 15px rgba(255, 107, 129, 0.7));
       transition: transform 0.5s;
     }
-    
     .logo:hover {
       transform: scale(1.05);
     }
-    
-    /* Остальные стили остаются без изменений */
     h1 {
       font-size: 2.2rem;
       font-weight: normal;
       margin-bottom: 15px;
       letter-spacing: 1px;
     }
-    
     .subtitle {
       font-size: 1.1rem;
       color: var(--text-muted);
@@ -74,14 +52,12 @@
       line-height: 1.6;
       margin-bottom: 40px;
     }
-    
     .journey {
       width: 100%;
       max-width: 800px;
       position: relative;
       margin: 50px 0;
     }
-    
     .journey-line {
       height: 2px;
       background: linear-gradient(90deg, transparent, var(--accent), transparent);
@@ -91,7 +67,6 @@
       left: 0;
       z-index: 1;
     }
-    
     .milestone {
       position: relative;
       padding: 25px;
@@ -101,12 +76,10 @@
       transition: all 0.6s ease;
       z-index: 2;
     }
-    
     .milestone.visible {
       opacity: 1;
       transform: translateY(0);
     }
-    
     .milestone::before {
       content: '';
       position: absolute;
@@ -116,45 +89,69 @@
       background: var(--accent);
       top: 50%;
       transform: translateY(-50%);
-      box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.3);
+      box-shadow: 0 0 0 4px rgba(255, 107, 129, 0.3);
     }
-    
     .milestone:nth-child(odd) {
       text-align: right;
       padding-right: 100px;
     }
-    
     .milestone:nth-child(even) {
       text-align: left;
       padding-left: 100px;
     }
-    
     .milestone:nth-child(odd)::before {
       right: 30px;
     }
-    
     .milestone:nth-child(even)::before {
       left: 30px;
     }
-    
     .milestone-date {
       color: var(--accent);
       font-size: 0.9rem;
       margin-bottom: 8px;
     }
-    
     .milestone-text {
       font-size: 1.1rem;
       line-height: 1.5;
     }
-    
+    .milestone-img {
+      margin-top: 15px;
+      width: 80%;
+      max-width: 500px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(212, 175, 55, 0.15);
+    }
+    .fact-block {
+      margin: 40px 0;
+      max-width: 600px;
+      background: rgba(255, 255, 255, 0.03);
+      padding: 20px 30px;
+      border-radius: 12px;
+      border: 1px solid rgba(212, 175, 55, 0.2);
+    }
+    .fact-block h2 {
+      margin-bottom: 10px;
+      color: var(--accent);
+    }
+    .letter-block {
+      background: rgba(255,255,255,0.04);
+      border-left: 4px solid var(--accent);
+      padding: 20px;
+      margin: 40px 0;
+      max-width: 600px;
+      text-align: left;
+      border-radius: 8px;
+    }
+    .letter-block h2 {
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
     .music-player {
       margin: 40px 0;
       display: flex;
       flex-direction: column;
       align-items: center;
     }
-    
     .music-btn {
       background-color: var(--accent);
       color: white;
@@ -169,119 +166,79 @@
       gap: 8px;
       font-family: 'Georgia', serif;
     }
-    
     .music-btn:hover {
-      background-color: #bfa036;
+      background-color: #e0556e;
       transform: scale(1.05);
     }
-    
     .volume-control {
       margin-top: 15px;
       width: 150px;
       opacity: 0.7;
       transition: opacity 0.3s;
     }
-    
     .music-notice {
       font-size: 0.8rem;
       color: var(--text-muted);
       margin-top: 10px;
       max-width: 300px;
     }
-    
     footer {
       margin-top: auto;
       padding: 20px;
       font-size: 0.9rem;
       color: var(--text-muted);
     }
-    
-    @media (max-width: 768px) {
-      h1 {
-        font-size: 1.8rem;
-      }
-      
-      .milestone {
-        padding: 20px 10px;
-        margin: 40px 0;
-      }
-      
-      .milestone:nth-child(odd),
-      .milestone:nth-child(even) {
-        text-align: center;
-        padding: 20px 30px !important;
-      }
-      
-      .milestone::before {
-        display: none;
-      }
-      
-      .logo {
-        height: 100px;
-      }
-    }
   </style>
 </head>
 <body>
-  <!-- Логотип -->
-  <div class="logo-container">
-    <img src="LOGO_ZOKA.png" alt="ZOKA" class="logo">
-  </div>
-  
-  <p class="subtitle" style="margin-top: -10px; margin-bottom: 30px;">
-    Лимитированная коллекция вдохновения
-  </p>
-  
+  <img src="LOGO_ZOKA.png" alt="ZOKA" class="logo">
   <h1>Твой уникальный путь</h1>
   <p class="subtitle">Каждый шаг — это история, достойная восхищения</p>
-  
-  <!-- Линия жизни -->
+
+  <div class="fact-block">
+    <h2>Факт, который стоит помнить</h2>
+    <p id="fact-text">Ты умеешь восхищать — просто своим присутствием.</p>
+    <button class="music-btn" onclick="getRandomFact()">Показать ещё</button>
+  </div>
+
   <div class="journey">
     <div class="journey-line"></div>
-    
-    <!-- Вехи -->
     <div class="milestone">
       <div class="milestone-date">Начало</div>
-      <div class="milestone-text">
-        <i class="fas fa-seedling" style="color: var(--accent); margin-right: 8px;"></i>
-        Там, где другие видели границы, ты увидела возможности
-      </div>
+      <div class="milestone-text">Там, где другие видели границы, ты увидела возможности</div>
+      <img src="images/1.jpg" class="milestone-img">
     </div>
-    
     <div class="milestone">
       <div class="milestone-date">2018</div>
-      <div class="milestone-text">
-        <i class="fas fa-mountain" style="color: var(--accent); margin-right: 8px;"></i>
-        Первые вершины, которые казались недостижимыми
-      </div>
+      <div class="milestone-text">Первые вершины, которые казались недостижимыми</div>
+      <img src="images/2.jpg" class="milestone-img">
     </div>
-    
     <div class="milestone">
       <div class="milestone-date">2020</div>
-      <div class="milestone-text">
-        <i class="fas fa-trophy" style="color: var(--accent); margin-right: 8px;"></i>
-        Преодоление трудностей, которые сделали тебя сильнее
-      </div>
+      <div class="milestone-text">Преодоление трудностей, которые сделали тебя сильнее</div>
+      <img src="images/3.jpg" class="milestone-img">
     </div>
-    
     <div class="milestone">
       <div class="milestone-date">Сейчас</div>
-      <div class="milestone-text">
-        <i class="fas fa-star" style="color: var(--accent); margin-right: 8px;"></i>
-        Ты там, куда многие только мечтают попасть
-      </div>
+      <div class="milestone-text">Ты там, куда многие только мечтают попасть</div>
+      <img src="images/4.jpg" class="milestone-img">
     </div>
-    
     <div class="milestone">
       <div class="milestone-date">Будущее</div>
-      <div class="milestone-text">
-        <i class="fas fa-rocket" style="color: var(--accent); margin-right: 8px;"></i>
-        Самые яркие моменты ещё впереди
-      </div>
+      <div class="milestone-text">Самые яркие моменты ещё впереди</div>
+      <img src="images/5.jpg" class="milestone-img">
     </div>
   </div>
-  
-  <!-- Музыкальный плеер -->
+
+  <div class="letter-block">
+    <h2>Письмо поддержки</h2>
+    <p>Нажми, чтобы услышать голос — не совет, не просьбу, просто голос, что рядом.</p>
+    <audio controls>
+      <source src="audio/voice_message.mp3" type="audio/mpeg">
+      Ваш браузер не поддерживает аудио.
+    </audio>
+  </div>
+
   <div class="music-player">
     <button class="music-btn" id="musicBtn">
       <i class="fas fa-music"></i> Включить музыку
@@ -289,23 +246,13 @@
     <input type="range" class="volume-control" id="volumeControl" min="0" max="1" step="0.1" value="0.7">
     <p class="music-notice">Нажмите кнопку, чтобы включить фоновую музыку</p>
   </div>
-  
+
   <footer>
-    (c) ZOKA · Лимитированная поддержка для самой сильной<br>
-    <span style="font-style: italic; color: var(--accent);">Ты не одна.</span>
+    Создано с ❤️ — 2025
   </footer>
-  
-  <!-- Аудио -->
-  <audio id="bgMusic" loop>
-    <source src="music/love_song.ogg" type="audio/ogg">
-    <source src="music/love_song.mp3" type="audio/mpeg">
-    Ваш браузер не поддерживает аудио.
-  </audio>
-  
+
   <script>
-    // Анимация вех при прокрутке
     const milestones = document.querySelectorAll('.milestone');
-    
     function checkMilestones() {
       milestones.forEach(milestone => {
         const rect = milestone.getBoundingClientRect();
@@ -314,18 +261,32 @@
         }
       });
     }
-    
     window.addEventListener('scroll', checkMilestones);
     window.addEventListener('load', checkMilestones);
-    
-    // Управление музыкой
+
+    const facts = [
+      "Ты умеешь восхищать — просто своим присутствием.",
+      "Ты вдохновляешь — не делая усилий, а просто будучи собой.",
+      "Ты красива не только снаружи, но и в том, как ты чувствуешь.",
+      "Ты умеешь делать моменты — особенными.",
+      "Ты не боишься идти вперёд — даже когда страшно."
+    ];
+
+    function getRandomFact() {
+      const text = document.getElementById("fact-text");
+      let newFact;
+      do {
+        newFact = facts[Math.floor(Math.random() * facts.length)];
+      } while (newFact === text.innerText);
+      text.innerText = newFact;
+    }
+
     const music = document.getElementById('bgMusic');
     const musicBtn = document.getElementById('musicBtn');
     const volumeControl = document.getElementById('volumeControl');
     let isPlaying = false;
-    
     music.volume = volumeControl.value;
-    
+
     musicBtn.addEventListener('click', async () => {
       try {
         if (isPlaying) {
@@ -341,15 +302,15 @@
         musicBtn.innerHTML = '<i class="fas fa-exclamation-circle"></i> Ошибка';
       }
     });
-    
+
     volumeControl.addEventListener('input', (e) => {
       music.volume = e.target.value;
     });
-    
-    music.addEventListener('error', () => {
-      alert('Ошибка загрузки музыки. Проверьте файл music.mp3');
-      musicBtn.disabled = true;
-    });
   </script>
+  <audio id="bgMusic" loop>
+    <source src="music/love_song.ogg" type="audio/ogg">
+    <source src="music/love_song.mp3" type="audio/mpeg">
+    Ваш браузер не поддерживает аудио.
+  </audio>
 </body>
 </html>
