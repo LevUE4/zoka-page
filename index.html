@@ -4,424 +4,389 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ZOKA — Твой путь</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
     :root {
-      --accent: #d4af37; /* золотой акцент */
-      --text-light: rgba(255, 255, 255, 0.9);
-      --text-muted: rgba(255, 255, 255, 0.6);
+      --accent: #ffffff;
+      --bg-dark: #0e0e0e;
+      --text-muted: rgba(255, 255, 255, 0.4);
+      --glow: 0 0 15px rgba(255, 255, 255, 0.3);
     }
-    
+
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
-    
+
     body {
-      font-family: 'Georgia', serif;
-      background-color: #121212;
-      color: var(--text-light);
+      font-family: 'DM Sans', sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--accent);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
       text-align: center;
-      padding: 20px;
-      background-image:
-        radial-gradient(circle at 25% 25%, rgba(255, 107, 129, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 75% 75%, rgba(255, 107, 129, 0.1) 0%, transparent 50%);
+      padding: 30px 20px;
+      overflow-x: hidden;
     }
-    
+
+    /* Анимация фона */
+    body::before {
+      content: '';
+      position: fixed;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: 
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,0.03) 0%, transparent 20%),
+        radial-gradient(circle at 70% 70%, rgba(255,255,255,0.03) 0%, transparent 20%);
+      animation: grain 8s steps(10) infinite;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    @keyframes grain {
+      0%, 100% { transform: translate(0, 0); }
+      10% { transform: translate(-5%, -10%); }
+      30% { transform: translate(3%, -15%); }
+      50% { transform: translate(12%, 9%); }
+      70% { transform: translate(9%, 4%); }
+      90% { transform: translate(-1%, 7%); }
+    }
+
     .logo {
       width: 180px;
-      margin: 30px 0;
-      filter: drop-shadow(0 0 15px rgba(255, 107, 129, 0.7));
-      transition: transform 0.5s;
+      margin: 40px 0;
+      filter: var(--glow);
+      transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
     }
-    
+
     .logo:hover {
-      transform: scale(1.05);
+      transform: scale(1.05) rotate(-2deg);
     }
-    
+
     h1 {
       font-size: 2.2rem;
-      font-weight: normal;
+      font-weight: 700;
       margin-bottom: 15px;
-      letter-spacing: 1px;
+      position: relative;
+      display: inline-block;
     }
-    
+
+    h1::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform 0.6s cubic-bezier(0.65, 0, 0.35, 1);
+    }
+
+    h1:hover::after {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+
     .subtitle {
       font-size: 1.1rem;
       color: var(--text-muted);
       max-width: 600px;
       line-height: 1.6;
-      margin-bottom: 40px;
+      margin-bottom: 60px;
+      position: relative;
     }
-    
+
+    .subtitle::before {
+      content: '❝';
+      position: absolute;
+      left: -25px;
+      top: -15px;
+      font-size: 2rem;
+      color: var(--text-muted);
+      opacity: 0.3;
+    }
+
+    .subtitle::after {
+      content: '❞';
+      position: absolute;
+      right: -25px;
+      bottom: -25px;
+      font-size: 2rem;
+      color: var(--text-muted);
+      opacity: 0.3;
+    }
+
     .journey {
       width: 100%;
       max-width: 800px;
       position: relative;
       margin: 50px 0;
     }
-    
+
     .journey-line {
-      height: 2px;
-      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--text-muted), transparent);
       width: 100%;
       position: absolute;
       top: 0;
       left: 0;
       z-index: 1;
     }
-    
+
     .milestone {
       position: relative;
-      padding: 25px;
+      padding: 40px 30px;
       margin: 60px 0;
       opacity: 0;
       transform: translateY(30px);
-      transition: all 0.6s ease;
+      transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
       z-index: 2;
     }
-    
+
     .milestone.visible {
       opacity: 1;
       transform: translateY(0);
     }
-    
+
     .milestone::before {
       content: '';
       position: absolute;
-      width: 16px;
-      height: 16px;
+      width: 14px;
+      height: 14px;
       border-radius: 50%;
       background: var(--accent);
       top: 50%;
       transform: translateY(-50%);
-      box-shadow: 0 0 0 4px rgba(255, 107, 129, 0.3);
+      box-shadow: var(--glow);
+      transition: all 0.3s ease;
     }
-    
+
+    .milestone:hover::before {
+      transform: translateY(-50%) scale(1.2);
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
+    }
+
     .milestone:nth-child(odd) {
       text-align: right;
       padding-right: 100px;
     }
-    
+
     .milestone:nth-child(even) {
       text-align: left;
       padding-left: 100px;
     }
-    
+
     .milestone:nth-child(odd)::before {
       right: 30px;
     }
-    
+
     .milestone:nth-child(even)::before {
       left: 30px;
     }
-    
+
     .milestone-date {
-      color: var(--accent);
-      font-size: 0.9rem;
+      color: var(--text-muted);
+      font-size: 0.85rem;
       margin-bottom: 8px;
+      letter-spacing: 1px;
+      font-weight: 500;
     }
-    
+
     .milestone-text {
       font-size: 1.1rem;
-      line-height: 1.5;
-    }
-    
-    .milestone-img {
-      margin-top: 15px;
-      width: 80%;
-      max-width: 500px;
-      border-radius: 10px;
-      box-shadow: 0 0 15px rgba(212, 175, 55, 0.15);
-      transition: transform 0.3s ease;
-    }
-    
-    .milestone-img:hover {
-      transform: scale(1.02);
-    }
-    
-    .fact-block {
-      margin: 40px 0;
-      max-width: 600px;
-      background: rgba(255, 255, 255, 0.03);
-      padding: 25px 30px;
-      border-radius: 12px;
-      border: 1px solid rgba(212, 175, 55, 0.2);
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-    }
-    
-    .fact-block h2 {
-      margin-bottom: 15px;
-      color: var(--accent);
-      font-size: 1.3rem;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    #fact-text {
-      font-size: 1.1rem;
       line-height: 1.6;
-      margin: 20px 0;
-      min-height: 60px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 15px;
-      background: rgba(212, 175, 55, 0.05);
-      border-radius: 8px;
-      border-left: 3px solid var(--accent);
-      transition: all 0.3s ease;
+      position: relative;
+      display: inline-block;
     }
 
-    .fact-actions {
-      display: flex;
-      justify-content: center;
-      margin-top: 15px;
+    .milestone-text::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--accent);
+      transition: width 0.6s ease;
     }
-    
-    .new-fact-btn {
-      background: rgba(212, 175, 55, 0.15);
-      border: none;
+
+    .milestone:hover .milestone-text::after {
+      width: 100%;
+    }
+
+    .music-player {
+      margin: 60px 0 40px;
+      position: relative;
+    }
+
+    .music-btn {
+      background-color: transparent;
+      border: 1px solid var(--accent);
       color: var(--accent);
-      padding: 10px 25px;
+      padding: 12px 30px;
       border-radius: 30px;
       cursor: pointer;
-      font-family: 'Georgia', serif;
-      font-size: 0.95rem;
-      transition: all 0.3s ease;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    }
-
-    .new-fact-btn:hover {
-      background: rgba(212, 175, 55, 0.25);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    }
-
-    .new-fact-btn i {
-      font-size: 0.9rem;
-      transition: transform 0.3s ease;
-    }
-
-    .new-fact-btn:hover i {
-      transform: rotate(45deg);
-    }
-
-    .letter-block {
-      background: rgba(255,255,255,0.04);
-      border-left: 4px solid var(--accent);
-      padding: 20px;
-      margin: 40px 0;
-      max-width: 600px;
-      text-align: left;
-      border-radius: 8px;
+      font-size: 1rem;
+      transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
       position: relative;
       overflow: hidden;
+      z-index: 1;
     }
-    
-    .letter-block::before {
+
+    .music-btn::before {
       content: '';
       position: absolute;
       top: 0;
       left: 0;
-      width: 100%;
+      width: 0;
       height: 100%;
-      background: linear-gradient(135deg, rgba(212, 175, 55, 0.05) 0%, transparent 100%);
-      pointer-events: none;
+      background: var(--accent);
+      transition: width 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+      z-index: -1;
     }
-    
-    .letter-block h2 {
-      color: var(--accent);
-      margin-bottom: 10px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    
-    .letter-block h2 i {
-      font-size: 1.2rem;
-    }
-    
-    .voice-player {
-      margin-top: 15px;
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-    
-    .voice-player audio {
-      width: 100%;
-    }
-    
-    .voice-player button {
-      background: rgba(212, 175, 55, 0.2);
-      border: 1px solid var(--accent);
-      color: var(--text-light);
-      padding: 8px 15px;
-      border-radius: 20px;
-      cursor: pointer;
-      transition: all 0.3s;
-    }
-    
-    .voice-player button:hover {
-      background: rgba(212, 175, 55, 0.3);
-    }
-    
-    .music-player {
-      margin: 40px 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    
-    .music-btn {
-      background-color: var(--accent);
-      color: white;
-      border: none;
-      padding: 12px 25px;
-      border-radius: 30px;
-      cursor: pointer;
-      font-size: 1rem;
-      transition: all 0.3s;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-family: 'Georgia', serif;
-    }
-    
+
     .music-btn:hover {
-      background-color: #e0556e;
-      transform: scale(1.05);
+      color: var(--bg-dark);
     }
-    
+
+    .music-btn:hover::before {
+      width: 100%;
+    }
+
     .volume-control {
-      margin-top: 15px;
-      width: 150px;
+      margin-top: 20px;
+      width: 200px;
+      -webkit-appearance: none;
+      height: 3px;
+      background: var(--text-muted);
+      outline: none;
       opacity: 0.7;
       transition: opacity 0.3s;
     }
-    
+
+    .volume-control::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      background: var(--accent);
+      cursor: pointer;
+      box-shadow: var(--glow);
+    }
+
     .music-notice {
       font-size: 0.8rem;
       color: var(--text-muted);
-      margin-top: 10px;
-      max-width: 300px;
+      margin-top: 15px;
+      letter-spacing: 1px;
     }
-    
+
     footer {
       margin-top: auto;
-      padding: 20px;
+      padding: 30px 20px 20px;
       font-size: 0.9rem;
       color: var(--text-muted);
+      position: relative;
+      width: 100%;
     }
-    
+
+    footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 1px;
+      background: var(--text-muted);
+    }
+
+    /* Анимации */
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .floating {
+      animation: float 6s ease-in-out infinite;
+    }
+
+    /* Адаптивность */
     @media (max-width: 768px) {
       h1 {
         font-size: 1.8rem;
       }
-      
-      .milestone {
-        padding: 20px 10px;
-        margin: 40px 0;
+
+      .subtitle {
+        font-size: 1rem;
+        margin-bottom: 40px;
       }
-      
+
+      .subtitle::before,
+      .subtitle::after {
+        display: none;
+      }
+
+      .milestone {
+        padding: 30px 20px;
+        margin: 50px 0;
+      }
+
       .milestone:nth-child(odd),
       .milestone:nth-child(even) {
         text-align: center;
-        padding: 20px 30px !important;
+        padding: 30px 20px !important;
       }
-      
+
       .milestone::before {
         display: none;
       }
-      
-      .milestone-img {
-        width: 100%;
+
+      .music-btn {
+        padding: 10px 25px;
       }
-    }
-
-    /* Анимация для фактов */
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .fade-in {
-      animation: fadeIn 0.5s ease forwards;
     }
   </style>
 </head>
 <body>
-  <img src="LOGO_ZOKA.png" alt="ZOKA" class="logo">
+  <img src="LOGO_ZOKA.png" alt="ZOKA" class="logo floating">
   <h1>Твой уникальный путь</h1>
   <p class="subtitle">Каждый шаг — это история, достойная восхищения</p>
-
-  <div class="fact-block">
-    <h2><i class="fas fa-lightbulb"></i> Факт о тебе</h2>
-    <div id="fact-text" class="fade-in">Ты умеешь восхищать — просто своим присутствием.</div>
-    <div class="fact-actions">
-      <button class="new-fact-btn" onclick="getRandomFact()">
-        <i class="fas fa-redo-alt"></i> Новый факт
-      </button>
-    </div>
-  </div>
 
   <div class="journey">
     <div class="journey-line"></div>
     
     <div class="milestone">
-      <div class="milestone-date">Начало</div>
+      <div class="milestone-date">НАЧАЛО</div>
       <div class="milestone-text">Там, где другие видели границы, ты увидела возможности</div>
-      <img src="images/beginning.jpg" class="milestone-img" alt="Начало пути">
     </div>
     
     <div class="milestone">
       <div class="milestone-date">2018</div>
       <div class="milestone-text">Первые вершины, которые казались недостижимыми</div>
-      <img src="images/2018.jpg" class="milestone-img" alt="2018 год">
     </div>
     
     <div class="milestone">
       <div class="milestone-date">2020</div>
       <div class="milestone-text">Преодоление трудностей, которые сделали тебя сильнее</div>
-      <img src="images/2020.jpg" class="milestone-img" alt="2020 год">
     </div>
     
     <div class="milestone">
-      <div class="milestone-date">Сейчас</div>
+      <div class="milestone-date">СЕЙЧАС</div>
       <div class="milestone-text">Ты там, куда многие только мечтают попасть</div>
-      <img src="images/now.jpg" class="milestone-img" alt="Настоящее время">
     </div>
     
     <div class="milestone">
-      <div class="milestone-date">Будущее</div>
+      <div class="milestone-date">БУДУЩЕЕ</div>
       <div class="milestone-text">Самые яркие моменты ещё впереди</div>
-      <img src="images/future.jpg" class="milestone-img" alt="Будущее">
-    </div>
-  </div>
-
-  <div class="letter-block">
-    <h2><i class="fas fa-envelope-open-text"></i> Письмо поддержки</h2>
-    <p>Нажми, чтобы услышать голос — не совет, не просьбу, просто голос, что рядом.</p>
-    
-    <div class="voice-player">
-      <audio id="voiceMessage" controls>
-        <source src="audio/voice_message.mp3" type="audio/mpeg">
-        Ваш браузер не поддерживает аудио.
-      </audio>
-      <button onclick="document.getElementById('voiceMessage').play()">
-        <i class="fas fa-play"></i> Слушать
-      </button>
     </div>
   </div>
 
@@ -430,28 +395,29 @@
       <i class="fas fa-music"></i> Включить музыку
     </button>
     <input type="range" class="volume-control" id="volumeControl" min="0" max="1" step="0.1" value="0.7">
-    <p class="music-notice">Нажмите кнопку, чтобы включить фоновую музыку</p>
+    <p class="music-notice">Нажмите для воспроизведения</p>
   </div>
 
   <footer>
-    Создано с ❤️ — 2025
+    Создано с уважением к настоящей легенде — ZOKA
   </footer>
 
   <audio id="bgMusic" loop>
     <source src="music/love_song.ogg" type="audio/ogg">
     <source src="music/love_song.mp3" type="audio/mpeg">
-    Ваш браузер не поддерживает аудио.
   </audio>
 
   <script>
-    // Анимация вех при прокрутке
+    // Анимация элементов при прокрутке
     const milestones = document.querySelectorAll('.milestone');
     
     function checkMilestones() {
-      milestones.forEach(milestone => {
+      milestones.forEach((milestone, index) => {
         const rect = milestone.getBoundingClientRect();
         if (rect.top < window.innerHeight * 0.75) {
-          milestone.classList.add('visible');
+          setTimeout(() => {
+            milestone.classList.add('visible');
+          }, index * 150);
         }
       });
     }
@@ -459,71 +425,55 @@
     window.addEventListener('scroll', checkMilestones);
     window.addEventListener('load', checkMilestones);
 
-    // Генератор фактов
-    const facts = [
-      "Ты умеешь восхищать — просто своим присутствием.",
-      "Ты вдохновляешь — не делая усилий, а просто будучи собой.",
-      "Ты красива не только снаружи, но и в том, как ты чувствуешь.",
-      "Ты умеешь делать моменты — особенными.",
-      "Ты не боишься идти вперёд — даже когда страшно.",
-      "Твоя улыбка может осветить самый хмурый день.",
-      "Ты обладаешь редким даром — видеть прекрасное в обычном.",
-      "Твоя сила — в твоей искренности.",
-      "Ты умеешь превращать трудности в возможности.",
-      "Твоя энергия заряжает всех вокруг."
-    ];
-    
-    function getRandomFact() {
-      const text = document.getElementById("fact-text");
-      let newFact;
-      do {
-        newFact = facts[Math.floor(Math.random() * facts.length)];
-      } while (newFact === text.innerText && facts.length > 1);
-      
-      text.classList.remove('fade-in');
-      setTimeout(() => {
-        text.innerText = newFact;
-        text.classList.add('fade-in');
-      }, 200);
-    }
-
     // Управление музыкой
     const music = document.getElementById('bgMusic');
     const musicBtn = document.getElementById('musicBtn');
     const volumeControl = document.getElementById('volumeControl');
     let isPlaying = false;
     
+    // Предзагрузка музыки
     music.volume = volumeControl.value;
+    music.load();
     
+    // Красивый обработчик клика
     musicBtn.addEventListener('click', async () => {
       try {
         if (isPlaying) {
           await music.pause();
           musicBtn.innerHTML = '<i class="fas fa-music"></i> Включить музыку';
+          document.body.style.setProperty('--glow', '0 0 10px rgba(255, 255, 255, 0.1)');
         } else {
           await music.play();
           musicBtn.innerHTML = '<i class="fas fa-pause"></i> Пауза';
+          document.body.style.setProperty('--glow', '0 0 20px rgba(255, 255, 255, 0.4)');
         }
         isPlaying = !isPlaying;
       } catch (e) {
-        alert('Браузер запретил воспроизведение. Обновите страницу и нажмите "Разрешить"');
         musicBtn.innerHTML = '<i class="fas fa-exclamation-circle"></i> Ошибка';
+        setTimeout(() => {
+          musicBtn.innerHTML = '<i class="fas fa-music"></i> Включить музыку';
+        }, 2000);
       }
     });
     
+    // Плавное изменение громкости
     volumeControl.addEventListener('input', (e) => {
       music.volume = e.target.value;
     });
     
-    // Проверка загрузки музыки
-    music.addEventListener('error', () => {
-      alert('Ошибка загрузки музыки. Проверьте файл music.mp3');
-      musicBtn.disabled = true;
+    // Эффект при наведении на регулятор громкости
+    volumeControl.addEventListener('mouseenter', () => {
+      volumeControl.style.opacity = '1';
     });
     
-    // Проверка загрузки голосового сообщения
-    document.getElementById('voiceMessage').addEventListener('error', () => {
-      console.log('Ошибка загрузки голосового сообщения');
+    volumeControl.addEventListener('mouseleave', () => {
+      volumeControl.style.opacity = '0.7';
+    });
+    
+    // Проверка загрузки музыки
+    music.addEventListener('error', () => {
+      musicBtn.innerHTML = '<i class="fas fa-times-circle"></i> Ошибка загрузки';
+      musicBtn.style.opacity = '0.7';
     });
   </script>
 </body>
