@@ -423,6 +423,130 @@
         padding-bottom: 75%; /* 4:3 для мобильных */
       }
     }
+
+      .milestone.no-marker {
+  max-width: unset;
+  width: 100%;
+  padding: 0;
+  margin: 100px auto;
+  text-align: center;
+}
+
+  .envelope-container {
+        perspective: 1200px;
+        width: 100%;
+         max-width: 800px;
+         margin: 80px auto;
+    }
+
+   .milestone.no-marker::before {
+        display: none;
+    }
+
+.envelope {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  background: linear-gradient(145deg, #1c1c1c, #2a2a2a);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  box-shadow: 0 10px 35px rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+  transform-style: preserve-3d;
+  transition: transform 1s ease;
+  cursor: pointer;
+  padding-top: 80px;
+}
+
+.envelope .flap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 80px;
+  background: linear-gradient(to bottom, #1b1b1b, #2e2e2e);
+  border-bottom: 2px solid #444;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  transform-origin: top;
+  transform: rotateX(0deg);
+  transition: transform 1s ease;
+  z-index: 3;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.envelope .flap::before {
+  content: "Открой меня";
+  font-size: 1rem;
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: 5px;
+}
+
+.envelope.open .flap {
+  transform: rotateX(-180deg);
+}
+
+.envelope .message {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s ease 0.3s;
+  text-align: center;
+  padding: 40px 30px;
+  color: #000;
+}
+
+.envelope.open .message {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.envelope .message p {
+  margin: 0 0 20px;
+  font-size: 1.1rem;
+  font-style: italic;
+  color: #333;
+}
+
+.envelope .message audio {
+  width: 100%;
+  max-width: 100%;
+  outline: none;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.envelope .message .envelope-logo {
+  width: 60px;
+  margin-bottom: 20px;
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.3));
+  opacity: 0.9;
+}
+
+.envelope-front-logo {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  opacity: 0.8;
+}
+
+.envelope-front-logo img {
+  width: 100px; /* можно 120px, если хочешь ещё больше */
+  filter: drop-shadow(0 0 12px rgba(255,255,255,0.4));
+  opacity: 0.9;
+}
+
+.envelope-front-logo img:hover {
+  transform: scale(1.05);
+  transition: transform 0.3s ease;
+}
+
   </style>
 </head>
 <body>
@@ -509,6 +633,29 @@
     </div>
   </div>
 
+  <div class="milestone no-marker">
+  <div class="milestone-date">СЕКРЕТНОЕ</div>
+  <div class="milestone-text">Только для тебя...</div>
+  <div class="envelope-container" onclick="openEnvelope()">
+    <div class="envelope">
+      <div class="flap"></div>
+
+      <div class="envelope-front-logo">
+         <img src="LOGO_ZOKA.png" alt="ZOKA">
+      </div>
+
+      <div class="message">
+        <p>🎧 Личное аудиосообщение</p>
+        <audio controls>
+          <source src="audio/voice_message.mp3" type="audio/mpeg">
+          Ваш браузер не поддерживает воспроизведение аудио.
+        </audio>
+      </div>
+    </div>
+  </div>
+</div>
+
+
   <div class="music-player">
     <button class="music-btn" id="musicBtn">
       <i class="fas fa-music"></i> Включить музыку
@@ -589,6 +736,11 @@
       musicBtn.innerHTML = '<i class="fas fa-times-circle"></i> Ошибка загрузки';
       musicBtn.style.opacity = '0.7';
     });
+
+    function openEnvelope() {
+        const envelope = document.querySelector('.envelope');
+        envelope.classList.toggle('open');
+    }
   </script>
 </body>
 </html>
