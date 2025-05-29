@@ -6,6 +6,7 @@
   <title>ZOKA — Твой путь</title>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
   <style>
     :root {
       --accent: #ffffff;
@@ -381,7 +382,8 @@
     }
 
     .flip-container:hover {
-      cursor: pointer;
+        transform: translateY(-5px);
+        transition: transform 0.3s ease;
     }
 
     /* Адаптивность */
@@ -547,6 +549,27 @@
   transition: transform 0.3s ease;
 }
 
+.flip-hint {
+  text-align: center;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.5);
+  font-style: italic;
+  margin-top: 8px;
+  animation: fadeIn 1s ease;
+}
+
+.final-message {
+  margin-top: 100px;
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.7);
+  font-style: italic;
+  animation: fadeIn 2s ease forwards;
+  opacity: 0;
+  text-align: center;
+}
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
   </style>
 </head>
 <body>
@@ -563,13 +586,14 @@
       <div class="flip-container" onclick="this.classList.toggle('flipped')">
         <div class="flip-inner">
           <div class="flip-front">
-            <img src="images/memor1.jpg" alt="НАЧАЛО">
+            <img src="images/memor1.jpg" alt="НАЧАЛО" title="Кликни, чтобы перевернуть">
           </div>
           <div class="flip-back">
             <p>❝ Всё великое начинается с первого шага ❞</p>
           </div>
         </div>
       </div>
+         <p class="flip-hint"> Нажми, чтобы перевернуть</p>
     </div>
     
     <div class="milestone">
@@ -578,7 +602,7 @@
       <div class="flip-container" onclick="this.classList.toggle('flipped')">
         <div class="flip-inner">
           <div class="flip-front">
-            <img src="images/memor2.jpg" alt="2018">
+            <img src="images/memor2.jpg" alt="2018" title="Кликни, чтобы перевернуть">
           </div>
           <div class="flip-back">
             <p>❝ Ты уже тогда знала, что можешь больше ❞</p>
@@ -593,7 +617,7 @@
       <div class="flip-container" onclick="this.classList.toggle('flipped')">
         <div class="flip-inner">
           <div class="flip-front">
-            <img src="images/memor3.jpg" alt="2020">
+            <img src="images/memor3.jpg" alt="2020" title="Кликни, чтобы перевернуть">
           </div>
           <div class="flip-back">
             <p>❝ Сила рождается в преодолении ❞</p>
@@ -608,7 +632,7 @@
       <div class="flip-container" onclick="this.classList.toggle('flipped')">
         <div class="flip-inner">
           <div class="flip-front">
-            <img src="images/memor4.jpg" alt="СЕЙЧАС">
+            <img src="images/memor4.jpg" alt="СЕЙЧАС" title="Кликни, чтобы перевернуть">
           </div>
           <div class="flip-back">
             <p>❝ Ты — вдохновение для других ❞</p>
@@ -623,7 +647,7 @@
       <div class="flip-container" onclick="this.classList.toggle('flipped')">
         <div class="flip-inner">
           <div class="flip-front">
-            <img src="images/memor5.jpg" alt="БУДУЩЕЕ">
+            <img src="images/memor5.jpg" alt="БУДУЩЕЕ" title="Кликни, чтобы перевернуть" >
           </div>
           <div class="flip-back">
             <p>❝ Самое прекрасное ещё впереди ❞</p>
@@ -638,7 +662,7 @@
   <div class="milestone-text">Только для тебя...</div>
   <div class="envelope-container" onclick="openEnvelope()">
     <div class="envelope">
-      <div class="flap"></div>
+      <div class="flap" title="Нажми, чтобы открыть послание" ></div>
 
       <div class="envelope-front-logo">
          <img src="LOGO_ZOKA.png" alt="ZOKA">
@@ -655,6 +679,9 @@
   </div>
 </div>
 
+<div id="final-message" class="final-message" style="display: none;">
+  <p>✨ Спасибо, что прошла этот путь. Это — только начало. ✨</p>
+</div>
 
   <div class="music-player">
     <button class="music-btn" id="musicBtn">
@@ -741,6 +768,26 @@
         const envelope = document.querySelector('.envelope');
         envelope.classList.toggle('open');
     }
+
+    function flipCard(container) {
+  container.classList.toggle('flipped');
+
+  // Найдём родительскую .milestone
+  const milestone = container.closest('.milestone');
+  if (milestone) {
+    const hint = milestone.querySelector('.flip-hint');
+    if (hint) {
+      hint.remove(); // Удаляем подсказку после первого клика
+    }
+  }
+}
+
+    const voice = document.querySelector('.envelope .message audio');
+const final = document.getElementById('final-message');
+
+voice.addEventListener('ended', () => {
+  final.style.display = 'block';
+});
   </script>
 </body>
 </html>
