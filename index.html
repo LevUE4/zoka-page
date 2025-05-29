@@ -149,17 +149,60 @@
       margin: 40px 0;
       max-width: 600px;
       background: rgba(255, 255, 255, 0.03);
-      padding: 20px 30px;
+      padding: 25px 30px;
       border-radius: 12px;
       border: 1px solid rgba(212, 175, 55, 0.2);
       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
     }
     
     .fact-block h2 {
-      margin-bottom: 10px;
+      margin-bottom: 15px;
       color: var(--accent);
+      font-size: 1.3rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    #fact-text {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      margin: 20px 0;
+      min-height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px;
+      background: rgba(212, 175, 55, 0.05);
+      border-radius: 8px;
+      border-left: 3px solid var(--accent);
     }
     
+    .new-fact-btn {
+      background: transparent;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      padding: 8px 20px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-family: 'Georgia', serif;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .new-fact-btn:hover {
+      background: rgba(212, 175, 55, 0.1);
+      transform: translateY(-2px);
+    }
+
+    .new-fact-btn i {
+      font-size: 0.9rem;
+    }
+
     .letter-block {
       background: rgba(255,255,255,0.04);
       border-left: 4px solid var(--accent);
@@ -302,9 +345,9 @@
 
   <div class="fact-block">
     <h2><i class="fas fa-lightbulb"></i> Факт о тебе</h2>
-    <p id="fact-text">Ты умеешь восхищать — просто своим присутствием.</p>
-    <button class="music-btn" onclick="getRandomFact()">
-      <i class="fas fa-random"></i> Новый факт
+    <div id="fact-text">Ты умеешь восхищать — просто своим присутствием.</div>
+    <button class="new-fact-btn" onclick="getRandomFact()">
+      <i class="fas fa-redo-alt"></i> Новый факт
     </button>
   </div>
 
