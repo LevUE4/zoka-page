@@ -315,6 +315,35 @@
       0%, 100% { transform: translateY(0); }
       50% { transform: translateY(-10px); }
     }
+@keyframes quoteAppear {
+  0% {
+    opacity: 0;
+    transform: translateY(20px) scale(0.9) rotateX(30deg);
+    filter: blur(2px);
+  }
+  50% {
+    opacity: 0.8;
+    filter: blur(1px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1) rotateX(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes quoteDisappear {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(1) rotateX(0);
+    filter: blur(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(20px) scale(0.9) rotateX(30deg);
+    filter: blur(2px);
+  }
+}
 
     .floating {
       animation: float 6s ease-in-out infinite;
@@ -373,18 +402,80 @@
     border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
+    .flip-back .back-image {
+    width: auto;
+    height: auto;
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
     .flip-back p {
-      font-style: italic;
-      color: rgba(255,255,255,0.6);
-      font-size: 0.9rem;
-      line-height: 1.3;
-      margin: 0;
+    font-style: italic;
+    color: rgba(255,255,255,0.8);
+    font-size: 1.3rem; /* Увеличим ещё немного */
+    line-height: 1.5;
+    margin: 20px;
+    text-align: center;
+    padding: 0 20px;
+    font-weight: 500;
+    opacity: 0; /* Начальное состояние - невидимо */
+    transform: translateY(15px);
+    animation: quoteAppear 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s forwards;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    will-change: opacity, transform;
+    }
+
+    .flip-container.flipped .flip-back p {
+    animation-delay: 0.3s; /* Задержка после переворота */
+    }
+
+    @keyframes fadeInText {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+    }
+
+    .flip-back img {
+       width: 100%;
+       height: 100%;
+       object-fit: cover;
+       border-radius: 12px;
     }
 
     .flip-container:hover {
         transform: translateY(-5px);
         transition: transform 0.3s ease;
     }
+
+    .future-back {
+    background: transparent !important;
+    padding: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+    }
+
+    .future-back img {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 12px;
+    filter: brightness(1.05) contrast(1.1);
+    box-shadow: 
+        0 0 0 1px rgba(255,255,255,0.1),
+        0 0 30px rgba(255,255,255,0.15);
+    transition: filter 0.5s ease;
+    }
+
+    .future-back:hover img {
+    filter: brightness(1.1) contrast(1.2);
+    }
+
+    
 
     /* Адаптивность */
     @media (max-width: 768px) {
@@ -583,7 +674,7 @@
     <div class="milestone">
       <div class="milestone-date">НАЧАЛО</div>
       <div class="milestone-text">Там, где другие видели границы, ты увидела возможности</div>
-      <div class="flip-container" onclick="this.classList.toggle('flipped')">
+      <div class="flip-container" onclick="flipCard(this)">
         <div class="flip-inner">
           <div class="flip-front">
             <img src="images/memor1.jpg" alt="НАЧАЛО" title="Кликни, чтобы перевернуть">
@@ -598,8 +689,8 @@
     
     <div class="milestone">
       <div class="milestone-date">2023</div>
-      <div class="milestone-text">>Ты решилась на то, что другим казалось сумасшествием. И стала ближе к небу</div>
-      <div class="flip-container" onclick="this.classList.toggle('flipped')">
+      <div class="milestone-text">Ты решилась на то, что другим казалось сумасшествием. И стала ближе к небу</div>
+      <div class="flip-container" onclick="flipCard(this)">
         <div class="flip-inner">
           <div class="flip-front">
             <img src="images/memor2.jpg" alt="2023" title="Кликни, чтобы перевернуть">
@@ -614,7 +705,7 @@
     <div class="milestone">
       <div class="milestone-date">2025</div>
       <div class="milestone-text">Быть сестрой — это не просто родство. Это тепло, которое остаётся навсегда</div>
-      <div class="flip-container" onclick="this.classList.toggle('flipped')">
+      <div class="flip-container" onclick="flipCard(this)">
         <div class="flip-inner">
           <div class="flip-front">
             <img src="images/memor3.jpg" alt="2025" title="Кликни, чтобы перевернуть">
@@ -629,7 +720,7 @@
     <div class="milestone">
       <div class="milestone-date">СЕЙЧАС</div>
       <div class="milestone-text">Ты наконец оказалась внутри своей мечты — и показала, как это красиво</div>
-      <div class="flip-container" onclick="this.classList.toggle('flipped')">
+      <div class="flip-container" onclick="flipCard(this)">
         <div class="flip-inner">
           <div class="flip-front">
             <img src="images/memor4.jpg" alt="СЕЙЧАС" title="Кликни, чтобы перевернуть">
@@ -642,20 +733,19 @@
     </div>
     
     <div class="milestone">
-      <div class="milestone-date">БУДУЩЕЕ</div>
-      <div class="milestone-text">Самые яркие моменты ещё впереди</div>
-      <div class="flip-container" onclick="this.classList.toggle('flipped')">
-        <div class="flip-inner">
-          <div class="flip-front">
-            <img src="images/memor5.jpg" alt="БУДУЩЕЕ" title="Кликни, чтобы перевернуть" >
-          </div>
-          <div class="flip-back">
-            <p>❝ Самое прекрасное ещё впереди ❞</p>
-          </div>
-        </div>
-      </div>
+        <div class="milestone-date">БУДУЩЕЕ</div>
+        <div class="milestone-text">Самые яркие моменты ещё впереди</div>
+        <div class="flip-container" onclick="flipCard(this)">
+            <div class="flip-inner">
+             <div class="flip-front">
+             <img src="images/memor5.jpg" alt="БУДУЩЕЕ" title="Кликни, чтобы перевернуть">
+             </div>
+             <div class="flip-back future-back" style="background: rgba(0, 0, 0, 0.7);">
+               <img src="images/memor6.jpeg" alt="Будущее — секрет" class="back-image">
+             </div>
+         </div>
+         </div>
     </div>
-  </div>
 
   <div class="milestone no-marker">
   <div class="milestone-date">СЕКРЕТНОЕ</div>
@@ -770,16 +860,31 @@
     }
 
     function flipCard(container) {
+  const isFlipped = container.classList.contains('flipped');
+  const quote = container.querySelector('.flip-back p');
+  
+  // Переключаем состояние
   container.classList.toggle('flipped');
-
-  // Найдём родительскую .milestone
-  const milestone = container.closest('.milestone');
-  if (milestone) {
-    const hint = milestone.querySelector('.flip-hint');
-    if (hint) {
-      hint.remove(); // Удаляем подсказку после первого клика
+  
+  if (quote) {
+    // Сбрасываем анимацию
+    quote.style.animation = 'none';
+    void quote.offsetWidth;
+    
+    if (!isFlipped) {
+      // Анимация появления с задержкой
+      setTimeout(() => {
+        quote.style.animation = 'quoteAppear 0.7s cubic-bezier(0.25, 0.1, 0.25, 1) forwards';
+      }, 300);
+    } else {
+      // Анимация исчезновения
+      quote.style.animation = 'quoteDisappear 0.4s ease-out forwards';
     }
   }
+  
+  // Скрываем подсказку
+  const hint = container.closest('.milestone')?.querySelector('.flip-hint');
+  if (hint) hint.style.opacity = '0';
 }
 
     const voice = document.querySelector('.envelope .message audio');
