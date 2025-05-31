@@ -855,8 +855,20 @@
     });
 
     function openEnvelope() {
-        const envelope = document.querySelector('.envelope');
-        envelope.classList.toggle('open');
+    const envelope = document.querySelector('.envelope');
+    const audio = envelope.querySelector('audio');
+  
+    envelope.classList.toggle('open');
+  
+    if (envelope.classList.contains('open')) {
+        // Разрешаем воспроизведение только после взаимодействия пользователя
+        audio.play().catch(e => {
+        console.log('Safari требует клика для аудио. Показываем подсказку.');
+        envelope.querySelector('.message p').textContent = '🎧 Нажми на кнопку плеера';
+        });
+        } else {
+            audio.pause();
+        }
     }
 
     function flipCard(container) {
