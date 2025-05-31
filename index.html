@@ -821,7 +821,7 @@
       try {
         if (isPlaying) {
           await music.pause();
-          musicBtn.innerHTML = '<i class="fas fa-music"></i> Включить музыку';
+          musicBtn.innerHTML = '<i class="fas fa-music"></i> Навалить кринжа';
           document.body.style.setProperty('--glow', '0 0 10px rgba(255, 255, 255, 0.1)');
         } else {
           await music.play();
@@ -832,7 +832,7 @@
       } catch (e) {
         musicBtn.innerHTML = '<i class="fas fa-exclamation-circle"></i> Ошибка';
         setTimeout(() => {
-          musicBtn.innerHTML = '<i class="fas fa-music"></i> Включить музыку';
+          musicBtn.innerHTML = '<i class="fas fa-music"></i> Навалить кринжа';
         }, 2000);
       }
     });
