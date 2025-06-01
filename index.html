@@ -539,7 +539,8 @@
 .envelope {
   position: relative;
   width: 100%;
-  height: 400px;
+  height: 0;
+  padding-bottom: 60%; /* Соотношение сторон 3:5 */
   background: linear-gradient(145deg, #1c1c1c, #2a2a2a);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 14px;
@@ -548,15 +549,15 @@
   transform-style: preserve-3d;
   transition: transform 1s ease;
   cursor: pointer;
-  padding-top: 80px;
 }
+
 
 .envelope .flap {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
-  height: 80px;
+  height: 20%; /* Высота клапана относительно конверта */
   background: linear-gradient(to bottom, #1b1b1b, #2e2e2e);
   border-bottom: 2px solid #444;
   border-top-left-radius: 12px;
@@ -565,7 +566,6 @@
   transform: rotateX(0deg);
   transition: transform 1s ease;
   z-index: 3;
-
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -585,12 +585,21 @@
 }
 
 .envelope .message {
+  position: absolute;
+  top: 20%;
+  left: 0;
+  right: 0;
+  bottom: 0;
   opacity: 0;
   transform: translateY(30px);
   transition: all 0.8s ease 0.3s;
   text-align: center;
   padding: 40px 30px;
   color: #000;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .envelope.open .message {
@@ -622,7 +631,7 @@
 
 .envelope-front-logo {
   position: absolute;
-  bottom: 20px;
+  bottom: 10%;
   left: 50%;
   transform: translateX(-50%);
   z-index: 2;
@@ -630,9 +639,10 @@
 }
 
 .envelope-front-logo img {
-  width: 100px; /* можно 120px, если хочешь ещё больше */
+  width: 100px;
   filter: drop-shadow(0 0 12px rgba(255,255,255,0.4));
   opacity: 0.9;
+  transition: transform 0.3s ease;
 }
 
 .envelope-front-logo img:hover {
@@ -770,7 +780,7 @@
 </div>
 
 <div id="final-message" class="final-message" style="display: none;">
-  <p>✨ Спасибо, что прошла этот путь. Это — только начало. ✨</p>
+  <p>✨ Твой путь уже вдохновляет. А впереди — всё то, ради чего стоило идти. ✨</p>
 </div>
 
   <div class="music-player">
