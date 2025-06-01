@@ -480,17 +480,17 @@
     /* Адаптивность */
     @media (max-width: 768px) {
       .envelope {
-    height: 280px !important; /* Фиксированная высота для мобильных */
-    padding-top: 50px !important;
-  }
+  aspect-ratio: 4 / 2.2;
+  height: auto;
+}
   
   .envelope .flap {
     height: 50px !important;
   }
   
   .envelope .message {
-    padding: 15px 10px !important;
-  }
+  pointer-events: none;
+}
   
   .envelope .message p {
     font-size: 1rem !important;
@@ -622,8 +622,7 @@
 }
 
 .envelope.open .message {
-  opacity: 1;
-  transform: translateY(0);
+  pointer-events: auto;
 }
 
 .envelope .message p {
