@@ -3,10 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-
-
   <title>ZOKA — Твой путь</title>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -487,73 +483,6 @@
         font-size: 1.8rem;
       }
 
-      .envelope-container {
-      margin: 40px auto;
-      }
-
-      .envelope {
-      padding-bottom: 80%; /* Выше конверт для мобильных */
-      }
-
-      .flap {
-      height: 25% !important; /* Больше область для клика */
-      }
-
-      .flap-text {
-    display: block !important; /* Всегда показываем текст */
-    font-size: 0.9rem;
-    margin-top: 5px;
-  }
-
-       .envelope-front-logo img {
-    width: 80px !important; /* Меньше логотип */
-  }
-
-      .message {
-    padding: 20px 15px !important;
-  }
-  
-      .message p {
-    font-size: 1rem !important;
-    margin-bottom: 15px !important;
-  }
-
-        .audio-container {
-    width: 100%;
-  }
-
-      /* Общие улучшения для конверта */
-.flap-text {
-  display: none;
-  font-style: italic;
-  color: rgba(255, 255, 255, 0.6);
-  font-size: 0.9rem;
-}
-
-      .envelope .message {
-  background: rgba(255, 255, 255, 0.95);
-  border-radius: 0 0 12px 12px;
-}
-
-      .envelope .message-content {
-  width: 100%;
-  max-width: 90%;
-  margin: 0 auto;
-}
-
-      .audio-container {
-  width: 100%;
-  max-width: 300px;
-  margin: 0 auto;
-}
-
-      audio {
-  width: 100%;
-  height: 50px;
-  border-radius: 8px;
-  background: #fff;
-}
-
       .subtitle {
         font-size: 1rem;
         margin-bottom: 40px;
@@ -607,41 +536,27 @@
         display: none;
     }
 
-  .envelope {
-    position: relative;
-    width: 100%;
-    height: 0;
-    padding-bottom: 60%;
-    background: linear-gradient(145deg, #1c1c1c, #2a2a2a);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 14px;
-    box-shadow: 0 10px 35px rgba(255, 255, 255, 0.1);
-    overflow: hidden;
-    transform-style: preserve-3d;
-    transition: transform 1s ease;
-    cursor: pointer;
-  }
-
-  .envelope.open .envelope-front-logo {
-    opacity: 0;
-    transition: opacity 0.3s ease;
-  }
-
-  @supports (-webkit-touch-callout: none) {
-    .envelope .message audio {
-      width: 100%;
-      height: 50px;
-      margin-top: 15px;
-    }
-   }
-
+.envelope {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  background: linear-gradient(145deg, #1c1c1c, #2a2a2a);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  box-shadow: 0 10px 35px rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+  transform-style: preserve-3d;
+  transition: transform 1s ease;
+  cursor: pointer;
+  padding-top: 80px;
+}
 
 .envelope .flap {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
-  height: 20%; /* Высота клапана относительно конверта */
+  height: 80px;
   background: linear-gradient(to bottom, #1b1b1b, #2e2e2e);
   border-bottom: 2px solid #444;
   border-top-left-radius: 12px;
@@ -650,6 +565,7 @@
   transform: rotateX(0deg);
   transition: transform 1s ease;
   z-index: 3;
+
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -669,21 +585,12 @@
 }
 
 .envelope .message {
-  position: absolute;
-  top: 20%;
-  left: 0;
-  right: 0;
-  bottom: 0;
   opacity: 0;
   transform: translateY(30px);
   transition: all 0.8s ease 0.3s;
   text-align: center;
   padding: 40px 30px;
   color: #000;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
 }
 
 .envelope.open .message {
@@ -715,7 +622,7 @@
 
 .envelope-front-logo {
   position: absolute;
-  bottom: 10%;
+  bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 2;
@@ -723,10 +630,9 @@
 }
 
 .envelope-front-logo img {
-  width: 100px;
+  width: 100px; /* можно 120px, если хочешь ещё больше */
   filter: drop-shadow(0 0 12px rgba(255,255,255,0.4));
   opacity: 0.9;
-  transition: transform 0.3s ease;
 }
 
 .envelope-front-logo img:hover {
@@ -841,36 +747,30 @@
          </div>
     </div>
 
-<div class="milestone no-marker">
+  <div class="milestone no-marker">
   <div class="milestone-date">СЕКРЕТНОЕ</div>
   <div class="milestone-text">Только для тебя...</div>
-  <div class="envelope-container" onclick="openEnvelope(event)">
+  <div class="envelope-container" onclick="openEnvelope()">
     <div class="envelope">
-      <div class="flap" title="Нажми, чтобы открыть послание">
-        <span class="flap-text">Открой меня</span>
-      </div>
+      <div class="flap" title="Нажми, чтобы открыть послание" ></div>
 
       <div class="envelope-front-logo">
-        <img src="LOGO_ZOKA.png" alt="ZOKA">
+         <img src="LOGO_ZOKA.png" alt="ZOKA">
       </div>
 
       <div class="message">
-        <div class="message-content">
-          <p>🎧 Личное аудиосообщение</p>
-          <div class="audio-container">
-            <audio controls controlsList="nodownload">
-              <source src="audio/voice_message.mp3" type="audio/mpeg">
-              Ваш браузер не поддерживает воспроизведение аудио.
-            </audio>
-          </div>
-        </div>
+        <p>🎧 Личное аудиосообщение</p>
+        <audio controls>
+          <source src="audio/voice_message.mp3" type="audio/mpeg">
+          Ваш браузер не поддерживает воспроизведение аудио.
+        </audio>
       </div>
     </div>
   </div>
 </div>
 
 <div id="final-message" class="final-message" style="display: none;">
-  <p>✨ Твой путь уже вдохновляет. А впереди — всё то, ради чего стоило идти. ✨</p>
+  <p>✨ Спасибо, что прошла этот путь. Это — только начало. ✨</p>
 </div>
 
   <div class="music-player">
@@ -954,73 +854,22 @@
       musicBtn.style.opacity = '0.7';
     });
 
-  function openEnvelope(e) {
-  // Предотвращаем всплытие события на мобильных
-  if (e) e.stopPropagation();
+    function openEnvelope() {
+    const envelope = document.querySelector('.envelope');
+    const audio = envelope.querySelector('audio');
   
-  const envelope = document.querySelector('.envelope');
-  const audio = envelope.querySelector('audio');
-  const logo = envelope.querySelector('.envelope-front-logo');
+    envelope.classList.toggle('open');
   
-  envelope.classList.toggle('open');
-  
-  if (envelope.classList.contains('open')) {
-    logo.style.opacity = '0';
-    
-    // Особый обработчик для мобильных устройств
-    if (/Mobi|Android|iPhone|iPad|iPod/.test(navigator.userAgent)) {
-      // Создаем кнопку для мобильных
-      const mobilePlayButton = document.createElement('button');
-      mobilePlayButton.innerHTML = '<i class="fas fa-play"></i> Воспроизвести сообщение';
-      mobilePlayButton.className = 'mobile-play-btn';
-      
-      mobilePlayButton.onclick = (e) => {
-        e.stopPropagation();
-        audio.play()
-          .then(() => mobilePlayButton.remove())
-          .catch(err => {
-            mobilePlayButton.textContent = 'Нажмите на плеер выше';
-            console.error('Audio error:', err);
-          });
-      };
-      
-      const messageContent = envelope.querySelector('.message-content');
-      if (!envelope.querySelector('.mobile-play-btn')) {
-        messageContent.appendChild(mobilePlayButton);
-        envelope.querySelector('.message p').textContent = '🎧 Нажмите кнопку ниже';
-      }
-    } else {
-      // Стандартное воспроизведение для десктопов
-      audio.play().catch(e => {
-        console.error('Audio error:', e);
-        envelope.querySelector('.message p').textContent = '🎧 Нажмите на кнопку плеера';
-      });
+    if (envelope.classList.contains('open')) {
+        // Разрешаем воспроизведение только после взаимодействия пользователя
+        audio.play().catch(e => {
+        console.log('Safari требует клика для аудио. Показываем подсказку.');
+        envelope.querySelector('.message p').textContent = '🎧 Нажми на кнопку плеера';
+        });
+        } else {
+            audio.pause();
+        }
     }
-  } else {
-    logo.style.opacity = '0.8';
-    audio.pause();
-    audio.currentTime = 0;
-  }
-}
-
-// Стиль для мобильной кнопки воспроизведения
-.mobile-play-btn {
-  background: rgba(0,0,0,0.7);
-  color: white;
-  border: none;
-  padding: 12px 20px;
-  border-radius: 30px;
-  margin-top: 15px;
-  font-size: 1rem;
-  width: 100%;
-  max-width: 280px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.mobile-play-btn:hover {
-  background: rgba(0,0,0,0.9);
-}
 
     function flipCard(container) {
   const isFlipped = container.classList.contains('flipped');
