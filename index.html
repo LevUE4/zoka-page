@@ -589,6 +589,8 @@
   transform: rotateX(0deg);
   transition: transform 1s ease;
   z-index: 3;
+    backface-visibility: hidden;
+  transform-style: preserve-3d;
 
   display: flex;
   flex-direction: column;
@@ -689,7 +691,7 @@
 
 .envelope.open .envelope-front-logo {
     opacity: 0 !important;
-    transition: opacity 0.3s ease !important;
+    transition: opacity 0.4s ease;
 }
   </style>
 </head>
