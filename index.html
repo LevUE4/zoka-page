@@ -480,27 +480,33 @@
     /* Адаптивность */
     @media (max-width: 768px) {
       .envelope {
-    height: auto; /* Убираем фиксированную высоту */
-    min-height: 300px; /* Минимальная высота */
-    padding-top: 60px; /* Уменьшаем отступ сверху */
+    height: 280px !important; /* Фиксированная высота для мобильных */
+    padding-top: 50px !important;
   }
- .envelope .flap {
-    height: 60px; /* Уменьшаем высоту клапана */
+  
+  .envelope .flap {
+    height: 50px !important;
   }
-       .envelope .message {
-    padding: 20px 15px; /* Уменьшаем отступы внутри */
+  
+  .envelope .message {
+    padding: 15px 10px !important;
   }
+  
   .envelope .message p {
-    font-size: 1rem; /* Уменьшаем размер текста */
+    font-size: 1rem !important;
+    margin-bottom: 10px !important;
   }
-  .envelope-front-logo img {
-    width: 80px; /* Уменьшаем логотип */
-  }
-        audio {
+  
+  /* Аудиоплеер */
+  .envelope .message audio {
     width: 100% !important;
-    min-width: 100%;
+    min-width: 100% !important;
   }
-}
+  
+  /* Логотип на конверте */
+  .envelope-front-logo img {
+    width: 80px !important;
+  }
       h1 {
         font-size: 1.8rem;
       }
@@ -630,7 +636,6 @@
 .envelope .message audio {
   width: 100%;
   max-width: 100%;
-      min-width: 100%
   outline: none;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0,0,0,0.1);
@@ -878,23 +883,21 @@
     });
 
     function openEnvelope() {
-  const envelope = document.querySelector('.envelope');
-  const audio = envelope.querySelector('audio');
+    const envelope = document.querySelector('.envelope');
+    const audio = envelope.querySelector('audio');
   
-  envelope.classList.toggle('open');
+    envelope.classList.toggle('open');
   
-  if (envelope.classList.contains('open')) {
-    // Для мобильных устройств показываем подсказку сразу
-    if (window.innerWidth <= 768) {
-      envelope.querySelector('.message p').innerHTML = '🎧 Нажмите на кнопку плеера';
+    if (envelope.classList.contains('open')) {
+        // Разрешаем воспроизведение только после взаимодействия пользователя
+        audio.play().catch(e => {
+        console.log('Safari требует клика для аудио. Показываем подсказку.');
+        envelope.querySelector('.message p').textContent = '🎧 Нажми на кнопку плеера';
+        });
+        } else {
+            audio.pause();
+        }
     }
-    audio.play().catch(e => {
-      envelope.querySelector('.message p').innerHTML = '🎧 Нажмите на кнопку плеера';
-    });
-  } else {
-    audio.pause();
-  }
-}
 
     function flipCard(container) {
   const isFlipped = container.classList.contains('flipped');
