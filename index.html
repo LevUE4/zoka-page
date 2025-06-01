@@ -487,6 +487,73 @@
         font-size: 1.8rem;
       }
 
+      .envelope-container {
+      margin: 40px auto;
+      }
+
+      .envelope {
+      padding-bottom: 80%; /* Выше конверт для мобильных */
+      }
+
+      .flap {
+      height: 25% !important; /* Больше область для клика */
+      }
+
+      .flap-text {
+    display: block !important; /* Всегда показываем текст */
+    font-size: 0.9rem;
+    margin-top: 5px;
+  }
+
+       .envelope-front-logo img {
+    width: 80px !important; /* Меньше логотип */
+  }
+
+      .message {
+    padding: 20px 15px !important;
+  }
+  
+      .message p {
+    font-size: 1rem !important;
+    margin-bottom: 15px !important;
+  }
+
+        .audio-container {
+    width: 100%;
+  }
+
+      /* Общие улучшения для конверта */
+.flap-text {
+  display: none;
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.9rem;
+}
+
+      .envelope .message {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 0 0 12px 12px;
+}
+
+      .envelope .message-content {
+  width: 100%;
+  max-width: 90%;
+  margin: 0 auto;
+}
+
+      .audio-container {
+  width: 100%;
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+      audio {
+  width: 100%;
+  height: 50px;
+  border-radius: 8px;
+  background: #fff;
+}
+
       .subtitle {
         font-size: 1rem;
         margin-bottom: 40px;
@@ -566,6 +633,7 @@
       height: 50px;
       margin-top: 15px;
     }
+   }
 
 
 .envelope .flap {
@@ -773,23 +841,29 @@
          </div>
     </div>
 
-  <div class="milestone no-marker">
+<div class="milestone no-marker">
   <div class="milestone-date">СЕКРЕТНОЕ</div>
   <div class="milestone-text">Только для тебя...</div>
-  <div class="envelope-container" onclick="openEnvelope()">
+  <div class="envelope-container" onclick="openEnvelope(event)">
     <div class="envelope">
-      <div class="flap" title="Нажми, чтобы открыть послание" ></div>
+      <div class="flap" title="Нажми, чтобы открыть послание">
+        <span class="flap-text">Открой меня</span>
+      </div>
 
       <div class="envelope-front-logo">
-         <img src="LOGO_ZOKA.png" alt="ZOKA">
+        <img src="LOGO_ZOKA.png" alt="ZOKA">
       </div>
 
       <div class="message">
-        <p>🎧 Личное аудиосообщение</p>
-        <audio controls>
-          <source src="audio/voice_message.mp3" type="audio/mpeg">
-          Ваш браузер не поддерживает воспроизведение аудио.
-        </audio>
+        <div class="message-content">
+          <p>🎧 Личное аудиосообщение</p>
+          <div class="audio-container">
+            <audio controls controlsList="nodownload">
+              <source src="audio/voice_message.mp3" type="audio/mpeg">
+              Ваш браузер не поддерживает воспроизведение аудио.
+            </audio>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -880,66 +954,73 @@
       musicBtn.style.opacity = '0.7';
     });
 
-    function openEnvelope() {
-    const envelope = document.querySelector('.envelope');
-    const audio = envelope.querySelector('audio');
-    const logo = envelope.querySelector('.envelope-front-logo');
+  function openEnvelope(e) {
+  // Предотвращаем всплытие события на мобильных
+  if (e) e.stopPropagation();
+  
+  const envelope = document.querySelector('.envelope');
+  const audio = envelope.querySelector('audio');
+  const logo = envelope.querySelector('.envelope-front-logo');
+  
+  envelope.classList.toggle('open');
+  
+  if (envelope.classList.contains('open')) {
+    logo.style.opacity = '0';
     
-    envelope.classList.toggle('open');
-    
-    if (envelope.classList.contains('open')) {
-      // Прячем логотип при открытии
-      logo.style.opacity = '0';
+    // Особый обработчик для мобильных устройств
+    if (/Mobi|Android|iPhone|iPad|iPod/.test(navigator.userAgent)) {
+      // Создаем кнопку для мобильных
+      const mobilePlayButton = document.createElement('button');
+      mobilePlayButton.innerHTML = '<i class="fas fa-play"></i> Воспроизвести сообщение';
+      mobilePlayButton.className = 'mobile-play-btn';
       
-      // Особый обработчик для iOS
-      if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
-        // Создаем кнопку для iOS
-        const iosPlayButton = document.createElement('button');
-        iosPlayButton.innerHTML = '<i class="fas fa-play"></i> Воспроизвести';
-        iosPlayButton.style.cssText = `
-          background: rgba(0,0,0,0.7);
-          color: white;
-          border: none;
-          padding: 10px 20px;
-          border-radius: 20px;
-          margin-top: 15px;
-          font-size: 1rem;
-        `;
-        
-        iosPlayButton.onclick = (e) => {
-          e.stopPropagation();
-          audio.play();
-          iosPlayButton.remove();
-        };
-        
-        envelope.querySelector('.message').appendChild(iosPlayButton);
-        
-        // Обновляем текст инструкции
-        envelope.querySelector('.message p').innerHTML = '🎧 Нажмите кнопку ниже';
-      } else {
-        // Стандартное воспроизведение для других устройств
-        audio.play().catch(e => {
-          console.error('Audio error:', e);
-          envelope.querySelector('.message p').textContent = '🎧 Нажмите на кнопку плеера';
-        });
+      mobilePlayButton.onclick = (e) => {
+        e.stopPropagation();
+        audio.play()
+          .then(() => mobilePlayButton.remove())
+          .catch(err => {
+            mobilePlayButton.textContent = 'Нажмите на плеер выше';
+            console.error('Audio error:', err);
+          });
+      };
+      
+      const messageContent = envelope.querySelector('.message-content');
+      if (!envelope.querySelector('.mobile-play-btn')) {
+        messageContent.appendChild(mobilePlayButton);
+        envelope.querySelector('.message p').textContent = '🎧 Нажмите кнопку ниже';
       }
     } else {
-      // Возвращаем логотип при закрытии
-      logo.style.opacity = '0.8';
-      audio.pause();
-      audio.currentTime = 0;
+      // Стандартное воспроизведение для десктопов
+      audio.play().catch(e => {
+        console.error('Audio error:', e);
+        envelope.querySelector('.message p').textContent = '🎧 Нажмите на кнопку плеера';
+      });
     }
+  } else {
+    logo.style.opacity = '0.8';
+    audio.pause();
+    audio.currentTime = 0;
   }
+}
 
-  // Добавляем обработчик для корректного закрытия конверта
-  document.addEventListener('click', function(e) {
-    const envelope = document.querySelector('.envelope');
-    if (envelope.classList.contains('open') && 
-        !e.target.closest('.envelope') && 
-        !e.target.closest('.envelope-container')) {
-      openEnvelope(); // Закрываем конверт при клике вне его
-    }
-  });
+// Стиль для мобильной кнопки воспроизведения
+.mobile-play-btn {
+  background: rgba(0,0,0,0.7);
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 30px;
+  margin-top: 15px;
+  font-size: 1rem;
+  width: 100%;
+  max-width: 280px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.mobile-play-btn:hover {
+  background: rgba(0,0,0,0.9);
+}
 
     function flipCard(container) {
   const isFlipped = container.classList.contains('flipped');
