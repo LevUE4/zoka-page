@@ -1009,6 +1009,27 @@ document.addEventListener('keydown', function(event) {
   }
 });
 
+let tapCount = 0;
+let tapTimer;
+
+const logo = document.querySelector('.logo');
+
+logo.addEventListener('click', () => {
+  tapCount++;
+  clearTimeout(tapTimer);
+  tapTimer = setTimeout(() => {
+    tapCount = 0;
+  }, 1000); // 1 секунда между тапами
+
+  if (tapCount === 4) {
+    const egg = document.getElementById('easter-egg-message');
+    egg.style.display = 'block';
+    egg.scrollIntoView({ behavior: 'smooth' });
+    tapCount = 0;
+  }
+});
+
+
   </script>
 </body>
 </html>
