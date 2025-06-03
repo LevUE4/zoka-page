@@ -695,6 +695,17 @@
     opacity: 0 !important;
     transition: opacity 0.4s ease;
 }
+
+#easter-egg-message {
+    background-color: rgba(255, 255, 255, 0.04);
+    padding: 20px;
+    border-radius: 12px;
+    margin-top: 40px;
+    font-style: italic;
+    color: rgba(255,255,255,0.6);
+    font-size: 1rem;
+  }
+
   </style>
 </head>
 <body>
@@ -830,6 +841,32 @@
     <p class="music-notice">Нажми для открытия дверей в КРИНЖ</p>
   </div>
 
+<div id="easter-egg-message" style="display:none; margin-top: 40px; font-style: italic; color: rgba(255,255,255,0.6); font-size: 1rem;">
+  Хочу честно рассказать одну вещь.<br><br>
+
+  Мой изначальный план был другим:<br>
+  ты возвращаешься домой — немного уставшая, может, вымотанная,<br>
+  а там — пакет. Сюрприз. Настроение. Вдох. <br>
+  Тепло — без слов и сообщений. Просто — момент.<br><br>
+
+  Сайт, детали, голос — всё должно было быть в одном потоке.<br>
+  Как единое: ты открываешь — и будто попадаешь в фильм. Или в сон. Или в очень тёплый ветер.<br><br>
+
+  Но ты уехала чуть раньше, чем я успел всё завершить.<br>
+  Пришлось импровизировать — не зная точно, когда и как ты уезжаешь.<br><br>
+
+  Поэтому вышло немного хаотично. Через сестру. Немного не так, как хотелось.<br>
+  Не из желания вмешаться, а наоборот — чтобы сохранить эффект неожиданности. Удивить. Порадовать.<br><br>
+
+  Если это выглядело как вторжение — извини.<br>
+  Я правда не хотел навязываться. Просто... сложно понять, как правильно “поддерживать”.<br>
+  Но если уж и поддерживать — то от сердца. Пусть и неловко. Зато по-настоящему.<br><br>
+
+  Я просто хотел, чтобы ты почувствовала что-то светлое. Сейчас, когда особенно нужно.<br>
+  И если хотя бы на секунду это удалось — значит, всё не зря.
+</div>
+
+
   <footer>
     Создано с уважением к настоящей легенде — ZOKA
   </footer>
@@ -954,6 +991,24 @@ const final = document.getElementById('final-message');
 voice.addEventListener('ended', () => {
   final.style.display = 'block';
 });
+
+let easterSequence = ['z', 'o', 'k', 'a'];
+let currentIndex = 0;
+
+document.addEventListener('keydown', function(event) {
+  if (event.key.toLowerCase() === easterSequence[currentIndex]) {
+    currentIndex++;
+    if (currentIndex === easterSequence.length) {
+      const egg = document.getElementById('easter-egg-message');
+      egg.style.display = 'block';
+      egg.scrollIntoView({ behavior: 'smooth' });
+      currentIndex = 0;
+    }
+  } else {
+    currentIndex = 0;
+  }
+});
+
   </script>
 </body>
 </html>
